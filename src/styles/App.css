@@ -1,0 +1,39 @@
+img{
+    max-width: 100%;
+}
+
+.responsive-embed{
+    border:1px solid royalblue;
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    /* background: red; */
+    display: block;
+    width: 100%;
+}
+
+#webcam-container {
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    /* background: royalblue; */
+}
+
+#emojis{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+#emojis img{
+    opacity: 0.5;
+    transition: opacity 200ms linear;
+}
+
+#emojis img.found{
+    opacity: 1;
+}
