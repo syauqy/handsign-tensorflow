@@ -5,9 +5,11 @@
   "version": "0.1.0",
   "author": "Syauqy <syauqyaziz@gmail.com>",
   "dependencies": {
-    "@teachablemachine/image": "^0.8.4",
     "@tensorflow-models/coco-ssd": "^2.2.1",
-    "@tensorflow/tfjs": "^2.7.0",
+    "@tensorflow-models/handpose": "^0.0.6",
+    "@tensorflow/tfjs": "^2.4.0",
+    "@tensorflow/tfjs-backend-webgl": "^2.4.0",
+    "fingerpose": "^0.0.2",
     "gatsby": "^2.26.1",
     "gatsby-image": "^2.5.0",
     "gatsby-plugin-manifest": "^2.6.1",

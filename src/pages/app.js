@@ -1,18 +1,18 @@
 import React,{useRef, useState, useEffect} from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as cocoSsd from '@tensorflow-models/coco-ssd';
-import * as tmImage from '@teachablemachine/image';
+// import * as tmImage from '@teachablemachine/image';
 import Img from "gatsby-image"
 import { useStaticQuery, graphql } from "gatsby"
 import Webcam from "react-webcam";
 import {drawRect} from '../components/utilities';
 
-import finger_emoji from '../images/fingcrossed_emoji.png';
-import horns_emoji from '../images/horns_emoji.png';
-import loveyou_emoji from '../images/loveyou_emoji.png';
-import okay_emoji from '../images/ok_emoji.png';
-import victory_emoji from '../images/victory_emoji.png';
-import vulcan_emoji from '../images/vulcan_emoji.png';
+import finger_emoji from '../emojimage/fingcrossed_emoji.png';
+import horns_emoji from '../emojimage/horns_emoji.png';
+import loveyou_emoji from '../emojimage/loveyou_emoji.png';
+import okay_emoji from '../emojimage/ok_emoji.png';
+import victory_emoji from '../emojimage/victory_emoji.png';
+import vulcan_emoji from '../emojimage/vulcan_emoji.png';
 import '../styles/App.css'
 import { constraints } from '@tensorflow/tfjs';
 
@@ -23,39 +23,39 @@ export default function App() {
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
 
-    let webcam, model, labelContainer, maxPredictions;
+    // let webcam, model, labelContainer, maxPredictions;
 
-    const URL = 'https://teachablemachine.withgoogle.com/models/NgKjeY-bp/';
+    // const URL = 'https://teachablemachine.withgoogle.com/models/NgKjeY-bp/';
 
 
-    async function runTmImage(){
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
+    // async function runTmImage(){
+    //     const modelURL = URL + "model.json";
+    //     const metadataURL = URL + "metadata.json";
 
-        //load teachable machine model
-        model = await tmImage.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
+    //     //load teachable machine model
+    //     model = await tmImage.load(modelURL, metadataURL);
+    //     maxPredictions = model.getTotalClasses();
 
-        //setup webcam
-        const flip = true;
-        webcam = new tmImage.Webcam(200, 200, flip);
-        await webcam.setup();
-        await webcam.play();
-        window.requestAnimationFrame(loop);
+    //     //setup webcam
+    //     const flip = true;
+    //     webcam = new tmImage.Webcam(200, 200, flip);
+    //     await webcam.setup();
+    //     await webcam.play();
+    //     window.requestAnimationFrame(loop);
 
-        //append elements to DOM
-        document.getElementById('webcam-container').appendChild(webcam.canvas);
-        labelContainer = document.getElementById('label-container');
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
-        }
-    }
+    //     //append elements to DOM
+    //     document.getElementById('webcam-container').appendChild(webcam.canvas);
+    //     labelContainer = document.getElementById('label-container');
+    //     for (let i = 0; i < maxPredictions; i++) { // and class labels
+    //         labelContainer.appendChild(document.createElement("div"));
+    //     }
+    // }
 
-    async function loop(){
-        webcam.update();
-        await predict();
-        window.requestAnimationFrame(loop);
-    }
+    // async function loop(){
+    //     webcam.update();
+    //     await predict();
+    //     window.requestAnimationFrame(loop);
+    // }
 
     let currentEmoji = 0;
 
@@ -86,31 +86,31 @@ export default function App() {
 
     // const emojiList = generateEmojis();
 
-    async function predict(){
-      if(currentEmoji === emojiList.length){
-        document.querySelector('.current-predictions').innerText = "Berhasil!!";
-        return;
-      }
-        const prediction = await model.predict(webcam.canvas);
-        // const pre = document.getElementsByClassName('current-predictions');
-        // pre.innerHTML = JSON.stringify(prediction, null, 2);
-        document.querySelector('.current-predictions').innerHTML = JSON.stringify(prediction, null, 2);
-        console.log('current emoji', emojiList[currentEmoji]);
-        // console.log('emoji List', emojiList);
+    // async function predict(){
+    //   if(currentEmoji === emojiList.length){
+    //     document.querySelector('.current-predictions').innerText = "Berhasil!!";
+    //     return;
+    //   }
+    //     const prediction = await model.predict(webcam.canvas);
+    //     // const pre = document.getElementsByClassName('current-predictions');
+    //     // pre.innerHTML = JSON.stringify(prediction, null, 2);
+    //     document.querySelector('.current-predictions').innerHTML = JSON.stringify(prediction, null, 2);
+    //     console.log('current emoji', emojiList[currentEmoji]);
+    //     // console.log('emoji List', emojiList);
 
-        const match = prediction.find(p => emojiList[currentEmoji].alt === p.className && p.probability >= 0.98);
-        console.log('match', match);
-        if(match){
-          document.querySelector(`[alt=${match.className}]`).classList.add('found');
-          currentEmoji++;
-        }
+    //     const match = prediction.find(p => emojiList[currentEmoji].alt === p.className && p.probability >= 0.98);
+    //     console.log('match', match);
+    //     if(match){
+    //       document.querySelector(`[alt=${match.className}]`).classList.add('found');
+    //       currentEmoji++;
+    //     }
 
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
-    }
+    //     for (let i = 0; i < maxPredictions; i++) {
+    //         const classPrediction =
+    //             prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+    //         labelContainer.childNodes[i].innerHTML = classPrediction;
+    //     }
+    // }
 
     //optional
     //tekan tombol untuk mulai dan mulai timer serta mulai menampilkan urutan emoji
@@ -269,8 +269,8 @@ function shuffle(a) {
             {/* <canvas ref={canvasRef}/> */}
         </div>
 
-        <button id="enable-webcam" onClick={runTmImage}>
-        Enable webcam</button>
+        {/* <button id="enable-webcam" onClick={runTmImage}>
+        Enable webcam</button> */}
 
         <button id="generateEmoji" onClick={_emojiList}>
         Generate emojis</button>
