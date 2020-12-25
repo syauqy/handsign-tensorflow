@@ -1,12 +1,3 @@
-//1. install depedencies - D
-//2. import dependencies - D
-//3. setup webcam and canvas - D
-//4. define references to those - D
-//5. load handpose - D
-//6. detect function
-//7. drawing utilites from tensorflow
-//8. draw functions
-//9. Install fingerpose
 
 import React, {useRef, useState, useCallback, useEffect} from 'react';
 import * as tf from '@tensorflow/tfjs';
@@ -169,18 +160,18 @@ export default function Handsign() {
             
             <div id="webcam-container">
             {camState === 'on'
-                ? <Webcam
+                ? <Webcam id="webcam"
                         ref={webcamRef}
                         style={{
-                        position: "relative",
+                        // position: "relative",
                         // marginLeft: "auto",
                         // marginRight: "auto",
                         // left: 0,
                         // right: 0,
                         textAlign: "center",
                         // zindex: 9,
-                        width: '480px',
-                        height: '800px'
+                        width: '100%',
+                        height: '100%'
                     }}>
                       
                     </Webcam>
@@ -190,22 +181,7 @@ export default function Handsign() {
 
                 <div id="emojis">emojis</div>
 
-                <canvas
-                ref={canvasRef}
-                style={{
-                position: "absolute",
-                margin: "auto",
-                top: 0,
-                bottom: 0,
-                // marginLeft: "auto",
-                // marginRight: "auto",
-                left: 0,
-                right: 0,
-                textAlign: "center",
-                zindex: 9,
-                width: '480px',
-                height: '400px'
-            }}/>
+                
 
              {emoji !== null || 'undefined'
                 ? (<img
@@ -222,13 +198,30 @@ export default function Handsign() {
                 }}/>)
                 : (" ")}
             </div>
+            <canvas
+            id="gesture-canvas"
+                ref={canvasRef}
+                style={{
+                // position: "absolute",
+                // // margin: "auto",
+                // // top: 0,
+                // // bottom: 0,
+                // // // marginLeft: "auto",
+                // // // marginRight: "auto",
+                // // left: 0,
+                // // right: 0,
+                // // textAlign: "center",
+                // zindex: 9,
+                // width: '100%',
+                // height: '100%'
+            }}/>
             </div>
             
             
             <pre className="pose-data"></pre>
             <button id="generateEmoji" onClick={_emojiList}>Generate emojis</button>
-            <button onClick={turnOffCamera}>matiin kamera</button>
-            <button onClick={runHandpose}>run handpose</button>
+            <button id="start-button" onClick={turnOffCamera}>matiin kamera</button>
+            <button id="start-button" onClick={runHandpose}>run handpose</button>
 
         </div>
     )
