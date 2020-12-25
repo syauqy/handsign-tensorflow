@@ -5,12 +5,12 @@ img{
 .responsive-embed{
     border:1px solid royalblue;
     position: relative;
-    width: 100%;
-    height: 0;
+    width: 480px;
+    height: 800px;
     padding-bottom: 56.25%;
     /* background: red; */
     display: block;
-    width: 100%;
+    /* width: 100%; */
 }
 
 #webcam-container {
@@ -19,14 +19,20 @@ img{
     left:0;
     right: 0;
     bottom: 0;
-    width: 100%;
-    height: 100%;
+    width: 480px;
+    height: 800px;
     /* background: royalblue; */
 }
 
 #emojis{
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    height: 50px;
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
 }
 
 #emojis img{
