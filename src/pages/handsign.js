@@ -1,4 +1,3 @@
-
 import React, {useRef, useState, useCallback, useEffect} from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as handpose from '@tensorflow-models/handpose';
@@ -7,6 +6,15 @@ import {drawHand} from '../components/handposeutil';
 import * as fp from 'fingerpose';
 
 import Emojis from '../gestures';
+
+import {
+    Text,
+    Heading,
+    Button,
+    Image,
+    Stack,
+    IconButton
+} from '@chakra-ui/react'
 
 import {Emojimage, Emojipass} from '../emojimage';
 
@@ -19,11 +27,14 @@ export default function Handsign() {
     const canvasRef = useRef(null);
     const [camState,
         setCamState] = useState("on");
-    const [gameState, setGameState] = useState(null);
 
     const [emoji,
         setEmoji] = useState(null);
 
+    let emojiList;
+    let currentEmoji = 0;
+    let points = 0;
+    let gamestate = 'started';
 
     async function runHandpose() {
         // setCamState('on');
@@ -36,7 +47,23 @@ export default function Handsign() {
         }, 100);
     };
 
-    let currentEmoji = 0;
+    function restartGame() {
+        _emojiList();
+        clearData();
+        gamestate = 'started';
+    }
+
+    function _emojiList() {
+        emojiList = generateEmojis();
+    }
+
+    function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
 
     function generateEmojis() {
         const password = shuffle(Emojipass);
@@ -55,18 +82,26 @@ export default function Handsign() {
         return password;
     }
 
-    let emojiList;
+    function clearData() {
+        currentEmoji = 0;
+        points = 0;
 
-    function _emojiList() {
-        emojiList = generateEmojis();
-    }
+        document
+            .querySelector('#emojis')
+            .innerText = "";
 
-    function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a;
+        document
+            .getElementById('points')
+            .innerHTML = points;
+        console.log('data cleared', currentEmoji, points);
+
+        document
+            .querySelector('#singmoji')
+            .innerText = "love emoji untuk mulai";
+
+        document
+            .getElementById('emojimage')
+            .removeAttribute('src')
     }
 
     async function detect(net) {
@@ -103,17 +138,15 @@ export default function Handsign() {
                 ]);
 
                 const estimatedGestures = await GE.estimate(hand[0].landmarks, 6.5);
-                console.log(estimatedGestures);
+                // console.log(estimatedGestures);
 
                 document
                     .querySelector('.pose-data')
                     .innerHTML = JSON.stringify(estimatedGestures.poseData, null, 2);
-
-                if (currentEmoji === emojiList.length) {
+                if (gamestate === 'started') {
                     document
-                        .querySelector('.pose-data')
-                        .innerText = "Berhasil!!";
-                    return;
+                        .querySelector('#singmoji')
+                        .innerText = "love emoji untuk mulai";
                 }
 
                 if (estimatedGestures.gestures !== undefined && estimatedGestures.gestures.length > 0) {
@@ -122,15 +155,55 @@ export default function Handsign() {
                         .map((p) => p.confidence);
                     const maxConfidence = confidence.indexOf(Math.max.apply(undefined, confidence));
 
-                    console.log('gestures', estimatedGestures.gestures);
-                    console.log('emoji', emojiList[currentEmoji].alt);
-                    // const match = estimatedGestures.find(g => emojiList[currentEmoji].alt === g.gestures.name);
-                    if(emojiList[currentEmoji].alt === estimatedGestures.gestures[maxConfidence].name){
-                              document.querySelector(`[alt=${estimatedGestures.gestures[maxConfidence].name}]`).classList.add('found');
-                              currentEmoji++;
-                            }
-                    setEmoji(estimatedGestures.gestures[maxConfidence].name);
-                    console.log(emoji);
+                    //setting up game state, looking for love emoji
+                    if (estimatedGestures.gestures[maxConfidence].name === 'love' && gamestate !== 'played') {
+                        console.log('masuk esitamed gesture', estimatedGestures.gestures[maxConfidence].name);
+                        gamestate = 'played';
+                        console.log('game_state', gamestate);
+                        console.log('currentEmoji', currentEmoji, 'emojilist.length', emojiList.length);
+                    } else if (gamestate === 'played') {
+                        //berhasil selesai semua
+                        if (currentEmoji === emojiList.length) {
+                            //animasi berhasil ganti tulisan emoji
+                            document
+                                .querySelector('#emojis')
+                                .innerText = "Berhasil!!";
+                            //munculin tombol ulangi balikin game state gamestate = 'finish';
+                            gamestate = 'finished';
+                            currentEmoji = 0;
+                            points = 0;
+                            return;
+                        }
+                        
+                        //game play state
+                        document
+                            .getElementById('emojimage')
+                            .setAttribute('src', emojiList[currentEmoji].src);
+
+                        console.log('points', points);
+                        // const match = estimatedGestures.find(g => emojiList[currentEmoji].alt ===
+                        // g.gestures.name);
+                        if (emojiList[currentEmoji].alt === estimatedGestures.gestures[maxConfidence].name) {
+                            // ganti emoji document
+                            // .querySelector(`[alt=${estimatedGestures.gestures[maxConfidence].name}]`)
+                            // .classList     .add('found');
+                            currentEmoji++;
+                            //nambah point
+                            points += 10;
+                            document
+                                .getElementById('points')
+                                .innerHTML = points;
+                            //animasi nambah point (framer asoys) bunyi cengkring nambah point
+                        }
+                        setEmoji(estimatedGestures.gestures[maxConfidence].name);
+                        // console.log(emoji);
+                    } else if(gamestate ===  'finished'){
+                        return;
+                    }
+                    // else if(gamestate === 'finished'){
+                    //     return;
+                    // }
+                    // setGameState(gamestate); console.log('status game', gameState);
                 }
 
             }
@@ -143,85 +216,93 @@ export default function Handsign() {
         }
     };
 
-    // useEffect(()=>{runHandpose()},[]);
+    useEffect(() => {
+        runHandpose()
+    }, []);
 
     function turnOffCamera() {
-      if(camState === "on"){
-        setCamState('off');
-      }else{
-        setCamState('on');
-      }
-        
+        if (camState === "on") {
+            setCamState('off');
+        } else {
+            setCamState('on');
+        }
+
     }
 
     return (
         <div>
             <div className="responsive-embed">
-            
-            <div id="webcam-container">
-            {camState === 'on'
-                ? <Webcam id="webcam"
-                        ref={webcamRef}
-                        style={{
-                        // position: "relative",
-                        // marginLeft: "auto",
-                        // marginRight: "auto",
-                        // left: 0,
-                        // right: 0,
-                        textAlign: "center",
-                        // zindex: 9,
-                        width: '100%',
-                        height: '100%'
-                    }}>
-                      
-                    </Webcam>
-                : <div>
-                    No cam
-                </div>}
 
-                <div id="emojis">emojis</div>
+                <div id="webcam-container">
+                    {camState === 'on'
+                        ? <Webcam id="webcam" ref={webcamRef}/>
+                        : <div id="webcam" background="black"></div>}
 
-                
+                    <div id="emojis">
+                        {/* <Heading as="h3" size="lg" className="title"></Heading> */}
+                    </div>
 
-             {emoji !== null || 'undefined'
-                ? (<img
-                    src={Emojimage[emoji]}
+                    {emoji !== null || 'undefined'
+                        ? (<img
+                            src={Emojimage[emoji]}
+                            style={{
+                            position: "absolute",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            left: 400,
+                            bottom: 500,
+                            right: 0,
+                            textAlign: "center",
+                            height: 50
+                        }}/>)
+                        : (" ")}
+                </div>
+                <canvas id="gesture-canvas" ref={canvasRef} style={{}}/>
+
+                <Heading
+                    as="h2"
+                    size="3xl"
+                    color="white"
+                    isTruncated
+                    textAlign="center"
                     style={{
-                    position: "absolute",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    left: 400,
-                    bottom: 500,
-                    right: 0,
-                    textAlign: "center",
-                    height: 50
-                }}/>)
-                : (" ")}
+                    position: 'fixed',
+                    bottom: '50px',
+                    right: '10px'
+                }}
+                    id="points">
+                    {points}
+                </Heading>
             </div>
-            <canvas
-            id="gesture-canvas"
-                ref={canvasRef}
+
+            <div
+                id="singmoji"
                 style={{
-                // position: "absolute",
-                // // margin: "auto",
-                // // top: 0,
-                // // bottom: 0,
-                // // // marginLeft: "auto",
-                // // // marginRight: "auto",
-                // // left: 0,
-                // // right: 0,
-                // // textAlign: "center",
-                // zindex: 9,
-                // width: '100%',
-                // height: '100%'
+                zIndex: 9,
+                position: 'fixed',
+                top: '50px',
+                right: '30px'
+            }}></div>
+
+            <Image
+                boxSize="80px"
+                objectFit="cover"
+                id='emojimage'
+                style={{
+                zIndex: 9,
+                position: 'fixed',
+                top: '60px',
+                right: '60px'
             }}/>
-            </div>
+            <pre className="pose-data" color="white" style={{position: 'fixed', top: '50px', left: '10px'}} >Pose data</pre>
+            <Stack id="start-button" spacing={4} direction="row" align="center">
+                <Button colorScheme="blue" onClick={restartGame}>START</Button>
+            <Button onClick={turnOffCamera} colorScheme="red">matiin kamera</Button>
+            {/* <IconButton aria-label="Search database" icon={<SearchIcon />} /> */}
+            </Stack>
             
-            
-            <pre className="pose-data"></pre>
             <button id="generateEmoji" onClick={_emojiList}>Generate emojis</button>
-            <button id="start-button" onClick={turnOffCamera}>matiin kamera</button>
-            <button id="start-button" onClick={runHandpose}>run handpose</button>
+            {/* <button id="start-button" onClick={runHandpose}>run handpose</button> */}
 
         </div>
     )

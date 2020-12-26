@@ -9,12 +9,12 @@ vulcanGesture.addDirection(Finger.Thumb, FingerDirection.HorizontalLeft, 0.5);
 
 //Index
 vulcanGesture.addCurl(Finger.Index, FingerCurl.NoCurl, 1);
-vulcanGesture.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.5);
+vulcanGesture.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.5);
 vulcanGesture.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.5);
 
 //Middle
 vulcanGesture.addCurl(Finger.Middle, FingerCurl.NoCurl, 1);
-vulcanGesture.addDirection(Finger.Middle, FingerDirection.VerticalUp, 0.5);
+vulcanGesture.addDirection(Finger.Middle, FingerDirection.DiagonalUpRight, 0.5);
 vulcanGesture.addDirection(Finger.Middle, FingerDirection.DiagonalUpLeft, 0.5);
 
 //Ring

@@ -33,7 +33,7 @@ export const drawHand = (prediction, ctx) => {
                             landmarks[secondJointIndex][1]
                         );
                     ctx.strokeStyle = "gold";
-                    ctx.lineWidth = 4;
+                    ctx.lineWidth = 2;
                     ctx.stroke();
                 }
             }
