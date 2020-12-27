@@ -9533,6 +9533,11 @@ markdown-table@^2.0.0:
   dependencies:
     repeat-string "^1.0.0"
 
+matter-js@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.15.0.tgz#92b86b3b374a8b948657697fc07c16e3bc86e2d7"
+  integrity sha512-+SXrgSz0IbbXo5pifWnw/IlWVrkrZXPI+2gMdvI6BCHpXrgRsmlj2wGKVBmjZC6qzBNM2ImqHCRuYhmEmwTOlA==
+
 md5-file@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/md5-file/-/md5-file-5.0.0.tgz#e519f631feca9c39e7f9ea1780b63c4745012e20"
@@ -10995,6 +11000,11 @@ pnp-webpack-plugin@^1.6.4:
   integrity sha512-7Wjy+9E3WwLOEL30D+m8TSTF7qJJUJLONBnwQp0518siuMxUQUbgZwssaFX+QKlZkjHZcw/IpZCt/H0srrntSg==
   dependencies:
     ts-pnp "^1.1.6"
+
+poly-decomp@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/poly-decomp/-/poly-decomp-0.3.0.tgz#aa499289bbc1a4ca2213e966587fa5bffc1ca5f5"
+  integrity sha512-hWeBxGzPYiybmI4548Fca7Up/0k1qS5+79cVHI9+H33dKya5YNb9hxl0ZnDaDgvrZSuYFBhkCK/HOnqN7gefkQ==
 
 popmotion@^9.0.2:
   version "9.0.2"
