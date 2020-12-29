@@ -1,5 +1,14 @@
-import React from 'react'
-import {Container, VStack, Center, Box} from '@chakra-ui/react'
+import React, {useRef, useState, useCallback, useEffect} from 'react';
+import {
+    Container,
+    VStack,
+    Center,
+    Box,
+    Text,
+    Button,
+    Heading
+} from '@chakra-ui/react'
+import {Link} from 'gatsby'
 import {motion} from 'framer-motion'
 import '../styles/mainmenu.css'
 import {Engine, Render, Runner, World, Bodies} from 'matter-js'
@@ -7,33 +16,57 @@ import {Engine, Render, Runner, World, Bodies} from 'matter-js'
 export default function app() {
     const world = document.querySelector(".boops");
     const emojis = [
-        'https://handemoji-ycbu6.ondigitalocean.app/static/victory_emoji-3ea45b00bb247c0a2318cc420313b539.png',
-        'https://handemoji-ycbu6.ondigitalocean.app/static/ok_emoji-37c54459c81eb1ba0ad30ec985435f7c.png',
-        'https://handemoji-ycbu6.ondigitalocean.app/static/horns_emoji-aa25b08920e8bb4717a39d781a45af5c.png',
-        'https://handemoji-ycbu6.ondigitalocean.app/static/vulcan_emoji-7de16378a23f53109f318be93077f0c6.png',
-        'https://handemoji-ycbu6.ondigitalocean.app/static/heart_emoji-d3621f36f76af5563d10606e441fb025.png',
-        'https://handemoji-ycbu6.ondigitalocean.app/static/fingcrossed_emoji-ed0b19926ff3a53c3d091662a3d75e30.png',
-        'https://handemoji-ycbu6.ondigitalocean.app/static/thumbs_up_emoji-09ed8ec30ef0adfeff564bbf17ea3050.png'
-    ]
+        'https://ik.imagekit.io/ps3xes4nrg/fingcrossed_emoji_avhUZ4KvEg0c.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/heart_emoji_8n0j1a9KqwN.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/horns_emoji_FpTUEO8IL.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/loveyou_emoji_0Y73SHTRFTaJ.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/ok_emoji_hLw6a6BB-.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/thumbs_up_emoji_K0eZbiEtKb0.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/victory_emoji_EXqiolk0d8c.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/vulcan_emoji_GkdMsyHqdC.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/thinking_emoji_FUH1tBqEbBw.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/hush_emoji_V4Xkp1Zwr.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/fist_emoji_kvPDQvO2gr.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/pinch_emoji_xDRVg9Hz3JEn.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/gun_emoji_T-2sCCXbXe.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/pray_emoji_LLdMjWIegtu.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/backhand_right_emoji_0mGFeXPCH.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/call_me_emoji_OvAYOorfRdL.svg',
+        'https://ik.imagekit.io/ps3xes4nrg/backhand_left_emoji_7bmFlF1CDLW.svg'
+    ];
+
+    // const deviceWidth = document.body.clientWidth; const deviceHeight =
+    // document.body.clientHeight;
+
+    const deviceWidth = window.innerWidth;
+    const deviceHeight = window.innerHeight;
+
+    function emojiAnimation() {
+        setInterval(() => {
+            boopClicked();
+        }, 888);
+    }
+
+    console.log('device width:', deviceWidth, 'device height:', deviceHeight);
 
     function createBall() {
+        const xDrop = Math.round(Math.random() * deviceWidth);
         const emojiUrl = emojis[Math.floor(Math.random() * emojis.length)];
-        const ball = Bodies.circle(Math.round(Math.random() * 1280), -30, 25, {
+        const ball = Bodies.circle(xDrop, -30, 23, {
             angle: Math.PI * (Math.random() * 2 - 1),
             friction: 0.001,
             frictionAir: 0.01,
             restitution: 0.8,
             render: {
                 sprite: {
-                    texture: emojiUrl
+                    texture: `${emojiUrl}`
                 }
             }
         });
-        console.log(emojiUrl);
+        console.log(emojiUrl, 'x:', xDrop);
         setTimeout(() => {
             World.remove(engine.world, ball);
         }, 30000);
-        
 
         return ball;
     }
@@ -44,8 +77,8 @@ export default function app() {
         canvas: world,
         engine: engine,
         options: {
-            width: 1280,
-            height: 720,
+            width: deviceWidth,
+            height: deviceHeight,
             background: "transparent",
             wireframes: false
         }
@@ -54,62 +87,54 @@ export default function app() {
     const boundaryOptions = {
         isStatic: true,
         render: {
-            fillStyle: "transparent",
-            strokeStyle: "transparent"
+            fillStyle: "red",
+            strokeStyle: "red"
         }
     };
 
-    const ground = Bodies.rectangle(640, 720, 1300, 4, boundaryOptions);
-    const leftWall = Bodies.rectangle(0, 360, 4, 740, boundaryOptions);
-    const rightWall = Bodies.rectangle(1280, 360, 4, 800, boundaryOptions);
+    const ground = Bodies.rectangle(deviceWidth / 2, deviceHeight, deviceWidth, 4, boundaryOptions);
+    const leftWall = Bodies.rectangle(0, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
+    const rightWall = Bodies.rectangle(deviceWidth, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
 
     Render.run(render);
     Runner.run(runner, engine);
 
     World.add(engine.world, [ground, leftWall, rightWall]);
 
-    const boopClicked = () =>{
+    const boopClicked = () => {
         const ball2 = createBall();
-        console.log('booped');
-  World.add(engine.world, [ball2]);
+        // console.log('booped');
+        World.add(engine.world, [ball2]);
     }
+
+    emojiAnimation();
 
     return (
         <div className="main-menu">
             <Container maxW="xl" centerContent>
-                <VStack spacing={4} align="stretch">
-                    <Box h="40px" bg="yellow.200">
-                        1
+                <VStack spacing={4} align="center">
+                    <Box h="auto">
+                        <Heading as="h1" size="4xl">
+                            HANDMOJI
+                        </Heading>
                     </Box>
-                    <Box h="40px" bg="tomato">
-                        2
+                    <Box h="auto">
+                        <Heading as="h3" size="lg">How many emoji you can make with your hand?</Heading>
                     </Box>
-                    <Box h="40px" bg="pink.100">
-                        3
-                    </Box>
-                    <motion.div
-                        className="lovemoji"
-                        initial={{
-                        scale: 0
-                    }}
-                        animate={{
-                        rotate: 180,
-                        scale: 1
-                    }}
-                        transition={{
-                        type: "spring",
-                        stiffness: 260,
-                        damping: 20
-                    }}/>
+                    <Box h="auto" bg="pink.100">
+                        <Link to="/handsign">
+                            <Button colorScheme="teal" size="md">
+                                PLAY
+                            </Button>
+                        </Link>
 
-                    
-
+                    </Box>
                 </VStack>
 
             </Container>
-            <button id="boop" onClick={boopClicked}>CLICK TO BOOP</button>
+            {/* <button id="boop" onClick={boopClicked}>CLICK TO BOOP</button> */}
 
-                    <canvas className="boops"></canvas>
+            <canvas className="boops"></canvas>
         </div>
     )
 }
