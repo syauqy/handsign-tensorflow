@@ -14,9 +14,13 @@ const IndexPage = () => (
 
   //   <App />
   // </Layout>
-  <ChakraProvider>
-    {/* <Handsign/> */}
+  <ChakraProvider id="chakra-provider">
+    <div id="chakra=prov">
     <App />
+    {/* <Handsign /> */}
+    </div>
+    {/* <Handsign/> */}
+    
   </ChakraProvider>
 )
 

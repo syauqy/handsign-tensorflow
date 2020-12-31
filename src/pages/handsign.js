@@ -13,7 +13,23 @@ import {
     Button,
     Image,
     Stack,
-    IconButton
+    IconButton,
+    Container,
+    Box,
+    Center,
+    VStack,
+
+//modal
+useDisclosure,
+    Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+
+  ChakraProvider
 } from '@chakra-ui/react'
 
 import {Emojimage, Emojipass} from '../emojimage';
@@ -27,6 +43,7 @@ export default function Handsign() {
     const canvasRef = useRef(null);
     const [camState,
         setCamState] = useState("on");
+        const [dataState, setDataState] = useState('off');
 
     const [emoji,
         setEmoji] = useState(null);
@@ -41,6 +58,7 @@ export default function Handsign() {
         const net = await handpose.load();
         console.log("Handpose model loaded.");
         _emojiList();
+        // onOpen();
         //  Loop and detect hands
         setInterval(() => {
             detect(net);
@@ -95,9 +113,9 @@ export default function Handsign() {
             .innerHTML = points;
         console.log('data cleared', currentEmoji, points);
 
-        document
-            .querySelector('#singmoji')
-            .innerText = "love emoji untuk mulai";
+        // document
+        //     .querySelector('#singmoji')
+        //     .innerText = "love emoji untuk mulai";
 
         document
             .getElementById('emojimage')
@@ -140,13 +158,16 @@ export default function Handsign() {
                 const estimatedGestures = await GE.estimate(hand[0].landmarks, 6.5);
                 // console.log(estimatedGestures);
 
-                document
-                    .querySelector('.pose-data')
-                    .innerHTML = JSON.stringify(estimatedGestures.poseData, null, 2);
+                // dataState === "on" ? document
+                // .querySelector('.pose-data')
+                // .innerHTML = JSON.stringify(estimatedGestures.poseData, null, 2) : "no data" 
+
+                if(dataState === "on"){
+                    
+                }
+
                 if (gamestate === 'started') {
-                    document
-                        .querySelector('#singmoji')
-                        .innerText = "love emoji untuk mulai";
+                    document.querySelector('#app-title').innerText = "Make a ❤️ love emoji with your hand";
                 }
 
                 if (estimatedGestures.gestures !== undefined && estimatedGestures.gestures.length > 0) {
@@ -226,14 +247,35 @@ export default function Handsign() {
         } else {
             setCamState('on');
         }
-
     }
 
-    return (
-        <div>
-            <div className="responsive-embed">
+    function showData(){
+        if(dataState === "on"){
+            setDataState('off');
+        } else{
+            setDataState('on');
+        }
+    }
 
-                <div id="webcam-container">
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    return (
+        <ChakraProvider>
+            <Container maxW="xl" centerContent>
+                <VStack spacing={4} align="center">
+                <Box h="50px"></Box>
+                <Box h="auto">
+                
+                </Box>
+
+                </VStack>
+
+                <Heading as="h1" size="xl" id="app-title" color="white" textAlign="center">🧙‍♀️ Loading the Magic 🧙‍♂️</Heading>
+            
+            {/* <div className="responsive-embed">
+            </div> */}
+
+            <div id="webcam-container">
                     {camState === 'on'
                         ? <Webcam id="webcam" ref={webcamRef}/>
                         : <div id="webcam" background="black"></div>}
@@ -273,7 +315,6 @@ export default function Handsign() {
                     id="points">
                     {points}
                 </Heading>
-            </div>
 
             <div
                 id="singmoji"
@@ -294,16 +335,39 @@ export default function Handsign() {
                 top: '60px',
                 right: '60px'
             }}/>
-            <pre className="pose-data" color="white" style={{position: 'fixed', top: '50px', left: '10px'}} >Pose data</pre>
-            <Stack id="start-button" spacing={4} direction="row" align="center">
-                <Button colorScheme="blue" onClick={restartGame}>START</Button>
-            <Button onClick={turnOffCamera} colorScheme="red">matiin kamera</Button>
+            {dataState === "on" ? <pre className="pose-data" color="white" style={{position: 'fixed', top: '50px', left: '10px'}} >Pose data</pre> : ""}
+            
+            
+            </Container>
+
+            {/* <ModalTutor isOpen={isOpen} onOpen={onOpen} onClose={onClose} /> */}
+            
+
+      <Stack id="start-button" spacing={4} direction="row" align="center">
+                <Button colorScheme="blue" onClick={showData}>data</Button>
+                {/* <Button colorScheme="blue" onClick={restartGame}>START</Button> */}
+            <Button onClick={turnOffCamera} colorScheme="blue">matiin kamera</Button>
             {/* <IconButton aria-label="Search database" icon={<SearchIcon />} /> */}
             </Stack>
-            
-            <button id="generateEmoji" onClick={_emojiList}>Generate emojis</button>
-            {/* <button id="start-button" onClick={runHandpose}>run handpose</button> */}
+           
+        </ChakraProvider>
+    )
+}
 
-        </div>
+function ModalTutor(isOpen, onOpen, onClose){
+    return(
+        <Modal onClose={onClose} isOpen={isOpen} isCentered id="modal-start">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Test
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     )
 }

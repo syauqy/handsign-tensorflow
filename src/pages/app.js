@@ -6,7 +6,17 @@ import {
     Box,
     Text,
     Button,
-    Heading
+    Heading,
+
+    //modal
+useDisclosure,
+Modal,
+ModalOverlay,
+ModalContent,
+ModalHeader,
+ModalFooter,
+ModalBody,
+ModalCloseButton,
 } from '@chakra-ui/react'
 import {Link} from 'gatsby'
 import {motion} from 'framer-motion'
@@ -35,16 +45,32 @@ export default function app() {
         'https://ik.imagekit.io/ps3xes4nrg/backhand_left_emoji_7bmFlF1CDLW.svg'
     ];
 
+    const titleMoji = [
+        '❤️',
+        '🤞',
+        '✌️',
+        '🤟',
+        '🤘',
+        '🤏',
+        '👌',
+        '🖖',
+    ]
+
     // const deviceWidth = document.body.clientWidth; const deviceHeight =
     // document.body.clientHeight;
 
     const deviceWidth = window.innerWidth;
     const deviceHeight = window.innerHeight;
 
+    let _titlemoji;
+
     function emojiAnimation() {
         setInterval(() => {
             boopClicked();
+            _titlemoji = titleMoji[Math.floor(Math.random() * titleMoji.length)];
+            console.log(_titlemoji);
         }, 888);
+        
     }
 
     console.log('device width:', deviceWidth, 'device height:', deviceHeight);
@@ -63,7 +89,7 @@ export default function app() {
                 }
             }
         });
-        console.log(emojiUrl, 'x:', xDrop);
+        // console.log(emojiUrl, 'x:', xDrop);
         setTimeout(() => {
             World.remove(engine.world, ball);
         }, 30000);
@@ -87,8 +113,8 @@ export default function app() {
     const boundaryOptions = {
         isStatic: true,
         render: {
-            fillStyle: "red",
-            strokeStyle: "red"
+            fillStyle: "transparent",
+            strokeStyle: "transparent"
         }
     };
 
@@ -113,18 +139,23 @@ export default function app() {
         <div className="main-menu">
             <Container maxW="xl" centerContent>
                 <VStack spacing={4} align="center">
+                    <Box h="50px"></Box>
                     <Box h="auto">
-                        <Heading as="h1" size="4xl">
+                        <Heading as="h1" size="4xl" color="purple.700">
                             HANDMOJI
                         </Heading>
                     </Box>
                     <Box h="auto">
-                        <Heading as="h3" size="lg">How many emoji you can make with your hand?</Heading>
+                        <Heading as="h3" size="lg" color="gray.700" style={{textAlign: "center"}}>How many emoji you can make with your hand?</Heading>
                     </Box>
-                    <Box h="auto" bg="pink.100">
-                        <Link to="/handsign">
-                            <Button colorScheme="teal" size="md">
-                                PLAY
+                    <Box h="100px"></Box>
+                    <Box h="auto" id="play-button">
+                        <Link to="/handsign" >
+                            <Button colorScheme="purple" size="lg">
+                                <Text fontSize="2xl" color="purple.700">
+                                PLAY 🕹 
+                                </Text>
+                            
                             </Button>
                         </Link>
 
@@ -132,9 +163,11 @@ export default function app() {
                 </VStack>
 
             </Container>
+
+            
             {/* <button id="boop" onClick={boopClicked}>CLICK TO BOOP</button> */}
 
-            <canvas className="boops"></canvas>
+            <canvas className="boops" style={{width:deviceWidth, height:deviceHeight}}></canvas>
         </div>
     )
 }
