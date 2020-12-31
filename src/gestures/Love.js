@@ -4,7 +4,8 @@ export const loveGesture = new GestureDescription('love');
 
 //Thumb
 loveGesture.addCurl(Finger.Thumb, FingerCurl.NoCurl, 1.0);
-loveGesture.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 0.5);
+loveGesture.addDirection(Finger.Thumb, FingerDirection.DiagonalUpRight, 0.5);
+loveGesture.addDirection(Finger.Thumb, FingerDirection.DiagonalUpLeft, 0.5);
 
 //Index
 loveGesture.addCurl(Finger.Index, FingerCurl.HalfCurl, 0.8);

@@ -2,6 +2,17 @@ img{
     max-width: 100%;
 }
 
+.boops {
+    display: block;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  z-index: 9;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
 
 #webcam{
     position: fixed;
@@ -66,15 +77,29 @@ img{
     z-index: 10;
 }
 
+#emojimage{
+    /* position: fixed; */
+    top: 60px;
+    left: calc(50% - 50px);
+    border-style: none;
+}
+
+#emojimage.play{
+    /* position: fixed; */
+    z-index: 10;
+}
+
+
 #emojis{
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     height: 50px;
     position: absolute;
     top:0;
     left:0;
     right: 0;
     bottom: 0;
+    text-align: -webkit-center;
 }
 
 #emojis img{
