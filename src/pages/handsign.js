@@ -4,6 +4,7 @@ import * as handpose from '@tensorflow-models/handpose';
 import Webcam from 'react-webcam';
 import {drawHand} from '../components/handposeutil';
 import * as fp from 'fingerpose';
+import { Helmet } from "react-helmet"
 
 import {Engine, Render, Runner, World, Bodies} from 'matter-js'
 
@@ -378,6 +379,11 @@ export default function Handsign() {
 
     return (
         <ChakraProvider>
+            <Helmet>
+          <meta charSet="utf-8" />
+          <title>Handmoji | Play</title>
+          {/* <link rel="canonical" href="http://mysite.com/example" /> */}
+        </Helmet>
             <Container maxW="xl" centerContent>
                 <VStack spacing={4} align="center">
                     <Box h="50px"></Box>
