@@ -61,6 +61,10 @@ img{
     z-index: 5;
 }
 
+.tutor-text{
+    z-index: 5;
+}
+
 #start-button{
     width: 400px;
     /* background-color: black;*/

@@ -6,8 +6,6 @@ import {drawHand} from '../components/handposeutil';
 import * as fp from 'fingerpose';
 import { Helmet } from "react-helmet"
 
-import {Engine, Render, Runner, World, Bodies} from 'matter-js'
-
 import Emojis from '../gestures';
 
 import {
@@ -16,21 +14,9 @@ import {
     Button,
     Image,
     Stack,
-    IconButton,
     Container,
     Box,
-    Center,
     VStack,
-
-    //modal
-    useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
 
     ChakraProvider
 } from '@chakra-ui/react'
@@ -88,9 +74,9 @@ export default function Handsign() {
 
     function generateEmojis() {
         const password = shuffle(Emojipass);
-        const passwordContainer = document.getElementById('emojis');
+        // const passwordContainer = document.getElementById('emojis');
 
-        passwordContainer.innerHTML = '';
+        // passwordContainer.innerHTML = '';
 
         // password.forEach(obj => {
         //     const img = document.createElement('img');
@@ -107,9 +93,9 @@ export default function Handsign() {
         currentEmoji = 0;
         points = 0;
 
-        document
-            .querySelector('#emojis')
-            .innerText = "";
+        // document
+        //     .querySelector('#emojis')
+        //     .innerText = "";
 
         document
             .getElementById('points')
@@ -124,121 +110,11 @@ export default function Handsign() {
             .removeAttribute('src')
     }
 
-    // const deviceWidth = window.innerWidth;
-    // const deviceHeight = window.innerHeight;
 
-    // const world = document.querySelector(".boops");
-
-    // const emojis = [
-    //     'https://ik.imagekit.io/ps3xes4nrg/fingcrossed_emoji_avhUZ4KvEg0c.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/heart_emoji_8n0j1a9KqwN.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/horns_emoji_FpTUEO8IL.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/loveyou_emoji_0Y73SHTRFTaJ.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/ok_emoji_hLw6a6BB-.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/thumbs_up_emoji_K0eZbiEtKb0.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/victory_emoji_EXqiolk0d8c.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/vulcan_emoji_GkdMsyHqdC.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/thinking_emoji_FUH1tBqEbBw.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/hush_emoji_V4Xkp1Zwr.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/fist_emoji_kvPDQvO2gr.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/pinch_emoji_xDRVg9Hz3JEn.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/gun_emoji_T-2sCCXbXe.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/pray_emoji_LLdMjWIegtu.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/backhand_right_emoji_0mGFeXPCH.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/call_me_emoji_OvAYOorfRdL.svg',
-    //     'https://ik.imagekit.io/ps3xes4nrg/backhand_left_emoji_7bmFlF1CDLW.svg'
-    // ];
-
-
-    // // console.log('device width:', deviceWidth, 'device height:', deviceHeight);
-
-    // function createBall() {
-    //     const xDrop = Math.round(Math.random() * deviceWidth);
-    //     const emojiUrl = emojis[Math.floor(Math.random() * emojis.length)];
-    //     const ball = Bodies.circle(xDrop, -30, 23, {
-    //         angle: Math.PI * (Math.random() * 2 - 1),
-    //         friction: 0.001,
-    //         frictionAir: 0.01,
-    //         restitution: 0.8,
-    //         render: {
-    //             sprite: {
-    //                 texture: `${emojiUrl}`
-    //             }
-    //         }
-    //     });
-    //     console.log(emojiUrl, 'x:', xDrop);
-    //     setTimeout(() => {
-    //         World.remove(engine.world, ball);
-    //     }, 30000);
-
-    //     return ball;
-    // }
-
-    // const engine = Engine.create();
-    // const runner = Runner.create();
-    // const render = Render.create({
-    //     canvas: world,
-    //     engine: engine,
-    //     options: {
-    //         width: deviceWidth,
-    //         height: deviceHeight,
-    //         background: "transparent",
-    //         wireframes: false
-    //     }
-    // });
-
-    // const boundaryOptions = {
-    //     isStatic: true,
-    //     render: {
-    //         fillStyle: "transparent",
-    //         strokeStyle: "transparent"
-    //     }
-    // };
-
-    // const ground = Bodies.rectangle(deviceWidth / 2, deviceHeight, deviceWidth, 4, boundaryOptions);
-    // const leftWall = Bodies.rectangle(0, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
-    // const rightWall = Bodies.rectangle(deviceWidth, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
-
-    // Render.run(render);
-    // Runner.run(runner, engine);
-
-    // World.add(engine.world, [ground, leftWall, rightWall]);
-
-    // const boopClicked = () => {
-    //     const ball2 = createBall();
-    //     // console.log('booped');
-    //     World.add(engine.world, [ball2]);
-    // }
-
-    // function emojiEffect() {
-    //     for (var i = 1; i < 10; i++) {boopClicked();}
-    // }
-
-    // function emojiAnimation() {
-    //     setInterval(() => {
-    //         boopClicked();
-    //         // _titlemoji = titleMoji[Math.floor(Math.random() * titleMoji.length)];
-    //         // console.log(_titlemoji);
-    //     }, 888);
-        
-    // }
-
-    // emojiAnimation();
 
     function tutorial(){
-        const emojiContainer = document.getElementById('emojis');
-
-        emojiContainer.innerHTML = '';
-
-        const Heading = document.createElement('Heading');
-        Heading.setAttribute("as","h2");
-        Heading.setAttribute("size","lg");
-        Heading.color = "white";
-
-        Heading.innerText = "make a hand gesture based on emoji shown below"
-
-
-        emojiContainer.appendChild(Heading);
+        const tutorText= document.getElementsByClassName('tutor-text');
+        tutorText.innerText = "make a hand gesture based on emoji shown below"
 
     }
 
@@ -312,7 +188,9 @@ export default function Handsign() {
                             .getElementById('emojimage')
                             .classList
                             .add('play');
-                        tutorial();
+                            document
+                            .querySelector('.tutor-text')
+                            .innerText = "make a hand gesture based on emoji shown below";
                     } else if (gamestate === 'played') {
                         document
                             .querySelector('#app-title')
@@ -360,8 +238,8 @@ export default function Handsign() {
             }
             // emojiEffect();
             // Draw mesh 
-            const ctx = canvasRef.current.getContext("2d");
-            drawHand(hand, ctx);
+            // const ctx = canvasRef.current.getContext("2d");
+            // drawHand(hand, ctx);
         }
     };
 
@@ -395,12 +273,13 @@ export default function Handsign() {
         </Helmet>
             <Container maxW="xl" centerContent>
                 <VStack spacing={4} align="center">
-                    <Box h="50px"></Box>
-                    <Box h="auto"></Box>
-
+                    <Box h="20px"></Box>
+                    <Heading as="h3" size="md" className="tutor-text" color="white" textAlign="center"></Heading>
+                    <Box h="20px"></Box>
                 </VStack>
 
-                <Heading as="h1" size="xl" id="app-title" color="white" textAlign="center">🧙‍♀️ Loading the Magic 🧙‍♂️</Heading>
+                <Heading as="h1" size="lg" id="app-title" color="white" textAlign="center">🧙‍♀️ Loading the Magic 🧙‍♂️</Heading>
+                
 
                 {/* <div className="responsive-embed">
             </div> */}
@@ -410,47 +289,30 @@ export default function Handsign() {
                         ? <Webcam id="webcam" ref={webcamRef}/>
                         : <div id="webcam" background="black"></div>}
 
-                    <div id="emojis">
-                        {/* <Heading as="h3" size="lg" className="title"></Heading> */}
-                    </div>
+                    {/* <div id="emojis"> */}
+                        
+                    {/* </div> */}
 
                     {emoji !== null || 'undefined'
-                        ? (<img
-                            src={Emojimage[emoji]}
-                            style={{
+                        ? (<div style={{
                             position: "absolute",
                             marginLeft: "auto",
                             marginRight: "auto",
-                            left: 400,
-                            bottom: 500,
-                            right: 0,
-                            textAlign: "center",
+                            right: "calc(50% - 50px)",
+                            bottom: 20,
+                            textAlign: "-webkit-center",}}>
+                            <Text color="white" fontSize="sm" mb={1}>detected gestures</Text>
+                        <img
+                            src={Emojimage[emoji]}
+                            style={{
                             height: 50
-                        }}/>)
+                        }}/>
+                        </div>
+                        )
                         : (" ")}
                 </div>
-                {/* <canvas
-                className="boops"
-                style={{
-                width: deviceWidth,
-                height: deviceHeight
-            }}></canvas> */}
-                <canvas id="gesture-canvas" ref={canvasRef} style={{}}/>
 
-                {/* <Heading
-                    as="h2"
-                    size="3xl"
-                    color="white"
-                    isTruncated
-                    textAlign="center"
-                    style={{
-                    position: 'fixed',
-                    bottom: '50px',
-                    right: '10px'
-                }}
-                    id="points">
-                    {points}
-                </Heading> */}
+                <canvas id="gesture-canvas" ref={canvasRef} style={{}}/>
 
                 <div
                     id="singmoji"
@@ -466,12 +328,12 @@ export default function Handsign() {
 
             </Container>
 
-            <Stack id="start-button" spacing={4} direction="row" align="center">
+            {/* <Stack id="start-button" spacing={4} direction="row" align="center"> */}
                 {/* <Button colorScheme="blue" onClick={restartGame}>data</Button> */}
                 {/* <Button colorScheme="blue" onClick={restartGame}>START</Button> */}
-                <Button onClick={turnOffCamera} colorScheme="blue">matiin kamera</Button>
+                {/* <Button onClick={turnOffCamera} colorScheme="blue">matiin kamera</Button> */}
                 {/* <IconButton aria-label="Search database" icon={<SearchIcon />} /> */}
-            </Stack>
+            {/* </Stack> */}
             
 
         </ChakraProvider>
