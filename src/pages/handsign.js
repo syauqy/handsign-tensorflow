@@ -92,13 +92,13 @@ export default function Handsign() {
 
         passwordContainer.innerHTML = '';
 
-        password.forEach(obj => {
-            const img = document.createElement('img');
-            img.src = obj.src;
-            img.alt = obj.alt;
+        // password.forEach(obj => {
+        //     const img = document.createElement('img');
+        //     img.src = obj.src;
+        //     img.alt = obj.alt;
 
-            passwordContainer.appendChild(img);
-        });
+        //     passwordContainer.appendChild(img);
+        // });
 
         return password;
     }
@@ -225,6 +225,23 @@ export default function Handsign() {
 
     // emojiAnimation();
 
+    function tutorial(){
+        const emojiContainer = document.getElementById('emojis');
+
+        emojiContainer.innerHTML = '';
+
+        const Heading = document.createElement('Heading');
+        Heading.setAttribute("as","h2");
+        Heading.setAttribute("size","lg");
+        Heading.color = "white";
+
+        Heading.innerText = "make a hand gesture based on emoji shown below"
+
+
+        emojiContainer.appendChild(Heading);
+
+    }
+
     async function detect(net) {
 
         // Check data is available
@@ -269,15 +286,14 @@ export default function Handsign() {
 
                 const estimatedGestures = await GE.estimate(hand[0].landmarks, 6.5);
                 console.log(estimatedGestures); 
-                document.querySelector('.pose-data') .innerHTML =
-                JSON.stringify(estimatedGestures.poseData, null, 2);
+                // document.querySelector('.pose-data') .innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
 
                 if (dataState === "on") {}
 
                 if (gamestate === 'started') {
                     document
                         .querySelector('#app-title')
-                        .innerText = "Make a ❤️ love emoji with your hand to start";
+                        .innerText = "Make a 👍 gesture with your hand to start";
                 }
 
                 if (estimatedGestures.gestures !== undefined && estimatedGestures.gestures.length > 0) {
@@ -287,9 +303,7 @@ export default function Handsign() {
                     const maxConfidence = confidence.indexOf(Math.max.apply(undefined, confidence));
 
                     //setting up game state, looking for love emoji
-                    if (estimatedGestures.gestures[maxConfidence].name === 'love' && gamestate !== 'played') {
-                        // console.log('masuk esitamed gesture',
-                        // estimatedGestures.gestures[maxConfidence].name);
+                    if (estimatedGestures.gestures[maxConfidence].name === 'thumbs_up' && gamestate !== 'played') {
                         _emojiList();
                         gamestate = 'played';
                         // console.log('game_state', gamestate); console.log('currentEmoji',
@@ -298,6 +312,7 @@ export default function Handsign() {
                             .getElementById('emojimage')
                             .classList
                             .add('play');
+                        tutorial();
                     } else if (gamestate === 'played') {
                         document
                             .querySelector('#app-title')
@@ -305,11 +320,7 @@ export default function Handsign() {
                         //berhasil selesai semua
                         if (currentEmoji === emojiList.length) {
                             //animasi berhasil ganti tulisan emoji
-                            document
-                                .querySelector('#app-title')
-                                .innerText = "You killed it!! 💪";
-                            //munculin tombol ulangi balikin game state gamestate = 'finish';
-                            gamestate = 'finished';
+                            _emojiList();
                             currentEmoji = 0;
                             points = 0;
                             return;
@@ -332,9 +343,9 @@ export default function Handsign() {
                             points += 10;
                             // emojiEffect();
                             
-                            document
-                                .getElementById('points')
-                                .innerHTML = points;
+                            // document
+                            //     .getElementById('points')
+                            //     .innerHTML = points;
                             //animasi nambah point (framer asoys) bunyi cengkring nambah point
                         }
                         setEmoji(estimatedGestures.gestures[maxConfidence].name);
@@ -344,8 +355,6 @@ export default function Handsign() {
                         
                         return;
                     }
-                    // else if(gamestate === 'finished'){     return; } setGameState(gamestate);
-                    // console.log('status game', gameState);
                 }
 
             }
@@ -428,7 +437,7 @@ export default function Handsign() {
             }}></canvas> */}
                 <canvas id="gesture-canvas" ref={canvasRef} style={{}}/>
 
-                <Heading
+                {/* <Heading
                     as="h2"
                     size="3xl"
                     color="white"
@@ -441,7 +450,7 @@ export default function Handsign() {
                 }}
                     id="points">
                     {points}
-                </Heading>
+                </Heading> */}
 
                 <div
                     id="singmoji"
@@ -453,12 +462,12 @@ export default function Handsign() {
                 }}></div>
 
                 <Image boxSize="80px" objectFit="cover" id='emojimage'/> 
-<pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre>
+{/* <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre> */}
 
             </Container>
 
             <Stack id="start-button" spacing={4} direction="row" align="center">
-                <Button colorScheme="blue" onClick={restartGame}>data</Button>
+                {/* <Button colorScheme="blue" onClick={restartGame}>data</Button> */}
                 {/* <Button colorScheme="blue" onClick={restartGame}>START</Button> */}
                 <Button onClick={turnOffCamera} colorScheme="blue">matiin kamera</Button>
                 {/* <IconButton aria-label="Search database" icon={<SearchIcon />} /> */}

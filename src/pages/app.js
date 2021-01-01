@@ -9,22 +9,34 @@ import {
     Heading,
 
     //modal
-useDisclosure,
-Modal,
-ModalOverlay,
-ModalContent,
-ModalHeader,
-ModalFooter,
-ModalBody,
-ModalCloseButton,
+    useDisclosure,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton
 } from '@chakra-ui/react'
 import {Link} from 'gatsby'
 import {motion} from 'framer-motion'
 import '../styles/mainmenu.css'
 import {Engine, Render, Runner, World, Bodies} from 'matter-js'
 
-export default function app() {
-    const world = document.querySelector(".boops");
+export default function MainMenu() {
+    // const webcamRef = useRef(null);
+    const boopRef = useRef(null);
+
+    // let world; let deviceHeight; let deviceWidth; if (typeof window !==
+    // 'undefined') {     world = document.querySelector(".boops");     deviceWidth
+    // = window.innerWidth;     deviceHeight = window.innerHeight; }
+
+    // function runAnimation() {
+    //     setInterval(() => {
+    //         emojiAnimation()
+    //     }, 888);
+    // }
+
     const emojis = [
         'https://ik.imagekit.io/ps3xes4nrg/fingcrossed_emoji_avhUZ4KvEg0c.svg',
         'https://ik.imagekit.io/ps3xes4nrg/heart_emoji_8n0j1a9KqwN.svg',
@@ -45,95 +57,93 @@ export default function app() {
         'https://ik.imagekit.io/ps3xes4nrg/backhand_left_emoji_7bmFlF1CDLW.svg'
     ];
 
-    const titleMoji = [
-        '❤️',
-        '🤞',
-        '✌️',
-        '🤟',
-        '🤘',
-        '🤏',
-        '👌',
-        '🖖',
-    ]
-
     // const deviceWidth = document.body.clientWidth; const deviceHeight =
     // document.body.clientHeight;
 
-    const deviceWidth = window.innerWidth;
-    const deviceHeight = window.innerHeight;
-
     let _titlemoji;
 
+    let deviceWidth;
+    let deviceHeight;
+    let world;
+
+    // function createBall() {
+    //     const xDrop = Math.round(Math.random() * deviceWidth);
+    //     const emojiUrl = emojis[Math.floor(Math.random() * emojis.length)];
+    //     const ball = Bodies.circle(xDrop, -30, 23, {
+    //         angle: Math.PI * (Math.random() * 2 - 1),
+    //         friction: 0.001,
+    //         frictionAir: 0.01,
+    //         restitution: 0.8,
+    //         render: {
+    //             sprite: {
+    //                 texture: `${emojiUrl}`
+    //             }
+    //         }
+    //     });
+    //     console.log(emojiUrl, 'x:', xDrop);
+    //     setTimeout(() => {
+    //         World.remove(engine.world, ball);
+    //     }, 30000);
+
+    //     return ball;
+    // }
+
+    // const engine = Engine.create();
+    // const runner = Runner.create();
+    // const render = Render.create({
+    //     canvas: world,
+    //     engine: engine,
+    //     options: {
+    //         width: deviceWidth,
+    //         height: deviceHeight,
+    //         background: "transparent",
+    //         wireframes: false
+    //     }
+    // });
+
+    // const boundaryOptions = {
+    //     isStatic: true,
+    //     render: {
+    //         fillStyle: "red",
+    //         strokeStyle: "red"
+    //     }
+    // };
+
+    // const ground = Bodies.rectangle(deviceWidth / 2, deviceHeight, deviceWidth, 4, boundaryOptions);
+    // const leftWall = Bodies.rectangle(0, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
+    // const rightWall = Bodies.rectangle(deviceWidth, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
+
+    // Render.run(render);
+    // Runner.run(runner, engine);
+
+    // World.add(engine.world, [ground, leftWall, rightWall]);
+
+    // const boopClicked = () => {
+    //     const ball2 = createBall();
+    //     // console.log('booped');
+    //     World.add(engine.world, [ball2]);
+    // }
+
     function emojiAnimation() {
-        setInterval(() => {
-            boopClicked();
-            _titlemoji = titleMoji[Math.floor(Math.random() * titleMoji.length)];
-            console.log(_titlemoji);
-        }, 888);
-        
-    }
+        if (typeof window !== 'undefined' && typeof boopRef.current !== "undefined") {
+            world = boopRef.current;
 
-    console.log('device width:', deviceWidth, 'device height:', deviceHeight);
+            deviceWidth = window.innerWidth;
+            deviceHeight = window.innerHeight;
 
-    function createBall() {
-        const xDrop = Math.round(Math.random() * deviceWidth);
-        const emojiUrl = emojis[Math.floor(Math.random() * emojis.length)];
-        const ball = Bodies.circle(xDrop, -30, 23, {
-            angle: Math.PI * (Math.random() * 2 - 1),
-            friction: 0.001,
-            frictionAir: 0.01,
-            restitution: 0.8,
-            render: {
-                sprite: {
-                    texture: `${emojiUrl}`
-                }
-            }
-        });
-        // console.log(emojiUrl, 'x:', xDrop);
-        setTimeout(() => {
-            World.remove(engine.world, ball);
-        }, 30000);
+            boopRef.current.width = deviceWidth;
+            boopRef.current.height = deviceHeight;
 
-        return ball;
-    }
+            console.log('device width:', deviceWidth, 'device height:', deviceHeight);
 
-    const engine = Engine.create();
-    const runner = Runner.create();
-    const render = Render.create({
-        canvas: world,
-        engine: engine,
-        options: {
-            width: deviceWidth,
-            height: deviceHeight,
-            background: "transparent",
-            wireframes: false
+            // boopClicked();
         }
-    });
 
-    const boundaryOptions = {
-        isStatic: true,
-        render: {
-            fillStyle: "transparent",
-            strokeStyle: "transparent"
-        }
-    };
-
-    const ground = Bodies.rectangle(deviceWidth / 2, deviceHeight, deviceWidth, 4, boundaryOptions);
-    const leftWall = Bodies.rectangle(0, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
-    const rightWall = Bodies.rectangle(deviceWidth, deviceHeight / 2, 4, deviceHeight, boundaryOptions);
-
-    Render.run(render);
-    Runner.run(runner, engine);
-
-    World.add(engine.world, [ground, leftWall, rightWall]);
-
-    const boopClicked = () => {
-        const ball2 = createBall();
-        // console.log('booped');
-        World.add(engine.world, [ball2]);
     }
 
-    emojiAnimation();
+    // useEffect(() => {
+    //     runAnimation()
+    // }, []);
 
     return (
         <div className="main-menu">
@@ -146,16 +156,22 @@ export default function app() {
                         </Heading>
                     </Box>
                     <Box h="auto">
-                        <Heading as="h3" size="lg" color="gray.700" style={{textAlign: "center"}}>How many emoji you can make with your hand?</Heading>
+                        <Heading
+                            as="h3"
+                            size="lg"
+                            color="gray.700"
+                            style={{
+                            textAlign: "center"
+                        }}>How many emoji you can make with your hand?</Heading>
                     </Box>
                     <Box h="100px"></Box>
                     <Box h="auto" id="play-button">
-                        <Link to="/handsign" >
+                        <Link to="/handsign">
                             <Button colorScheme="purple" size="lg">
                                 <Text fontSize="2xl" color="purple.700">
-                                PLAY 🕹 
+                                    PLAY 🕹
                                 </Text>
-                            
+
                             </Button>
                         </Link>
 
@@ -164,10 +180,9 @@ export default function app() {
 
             </Container>
 
-            
             {/* <button id="boop" onClick={boopClicked}>CLICK TO BOOP</button> */}
 
-            <canvas className="boops" style={{width:deviceWidth, height:deviceHeight}}></canvas>
+            <canvas className="boops" ref={boopRef}></canvas>
         </div>
     )
 }

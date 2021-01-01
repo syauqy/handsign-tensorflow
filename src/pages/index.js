@@ -1,13 +1,13 @@
 import React from "react"
 // import { Link } from "gatsby"
-import App from './app'
+import MainMenu from './app'
 import { Helmet } from "react-helmet"
 
 // import Layout from "../components/layout"
 // import Image from "../components/image"
 // import SEO from "../components/seo"
 import { ChakraProvider } from '@chakra-ui/react'
-// import Handsign from "./handsign"
+import Handsign from "./handsign"
 
 const IndexPage = () => (
   // <Layout>
@@ -21,7 +21,7 @@ const IndexPage = () => (
           <title>Handmoji | Start</title>
           {/* <link rel="canonical" href="http://mysite.com/example" /> */}
         </Helmet>
-    <App />
+    <Handsign />
     
   </ChakraProvider>
 )
