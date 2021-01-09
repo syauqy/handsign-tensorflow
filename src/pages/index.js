@@ -18,7 +18,7 @@ const IndexPage = () => (
   <ChakraProvider id="chakra-provider">
     <Helmet>
           <meta charSet="utf-8" />
-          <title>Handmoji | Start</title>
+          <title>Handsign | Learn ASL Using Your Camera</title>
           {/* <link rel="canonical" href="http://mysite.com/example" /> */}
         </Helmet>
     <Handsign />

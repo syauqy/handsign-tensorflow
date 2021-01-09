@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `Handmoji`,
-    description: `A simple game that using AI to detect your hand gesture and compare it with an emoji`,
+    title: `Handsign`,
+    description: `A simple ASL (American Sign Language) alphabet detection using TensorFlow and Handpose model`,
     author: `@syauqy`,
   },
   plugins: [

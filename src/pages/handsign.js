@@ -8,6 +8,8 @@ import { Helmet } from "react-helmet"
 
 import Emojis from '../gestures';
 
+import Handsigns from '../handsigns';
+
 import {
     Text,
     Heading,
@@ -22,6 +24,7 @@ import {
 } from '@chakra-ui/react'
 
 import {Emojimage, Emojipass} from '../emojimage';
+import {Signimage, Signpass} from '../handimage';
 
 import '../styles/App.css'
 
@@ -32,11 +35,16 @@ export default function Handsign() {
     const canvasRef = useRef(null);
     const [camState,
         setCamState] = useState("on");
-    const [dataState,
-        setDataState] = useState('off');
+    // const [dataState,
+    //     setDataState] = useState('off');
+
+    const [sign, setSign] = useState(null);
 
     const [emoji,
         setEmoji] = useState(null);
+
+    let signList;
+    let currentSign = 0;
 
     let emojiList;
     let currentEmoji = 0;
@@ -47,17 +55,17 @@ export default function Handsign() {
         // setCamState('on');
         const net = await handpose.load();
         console.log("Handpose model loaded.");
-        _emojiList();
+        // _emojiList();
+        _signList();
         // onOpen();  Loop and detect hands
         setInterval(() => {
             detect(net);
         }, 100);
     };
 
-    function restartGame() {
-        _emojiList();
-        clearData();
-        gamestate = 'started';
+
+    function _signList(){
+        signList = generateSigns();
     }
 
     function _emojiList() {
@@ -70,6 +78,11 @@ export default function Handsign() {
             [a[i], a[j]] = [a[j], a[i]];
         }
         return a;
+    }
+
+    function generateSigns(){
+        const password = shuffle(Signpass);
+        return password;
     }
 
     function generateEmojis() {
@@ -89,34 +102,6 @@ export default function Handsign() {
         return password;
     }
 
-    function clearData() {
-        currentEmoji = 0;
-        points = 0;
-
-        // document
-        //     .querySelector('#emojis')
-        //     .innerText = "";
-
-        document
-            .getElementById('points')
-            .innerHTML = points;
-        console.log('data cleared', currentEmoji, points);
-
-        // document     .querySelector('#singmoji')     .innerText = "love emoji untuk
-        // mulai";
-
-        document
-            .getElementById('emojimage')
-            .removeAttribute('src')
-    }
-
-
-
-    function tutorial(){
-        const tutorText= document.getElementsByClassName('tutor-text');
-        tutorText.innerText = "make a hand gesture based on emoji shown below"
-
-    }
 
     async function detect(net) {
 
@@ -137,34 +122,43 @@ export default function Handsign() {
 
             // Make Detections
             const hand = await net.estimateHands(video);
+            // console.log('aman', signList);
 
             if (hand.length > 0) {
                 // add "✌🏻" and "👍" as sample gestures
+                // const GE = new fp.GestureEstimator([
+                //     fp.Gestures.VictoryGesture,
+                //     fp.Gestures.ThumbsUpGesture,
+                //     Emojis.loveGesture,
+                //     Emojis.vulcanGesture,
+                //     Emojis.fingerCrossedGesture,
+                //     Emojis.loveYouGesture,
+                //     Emojis.hornsGesture,
+                //     Emojis.okayGesture,
+                //     Emojis.hushGesture,
+                //     Emojis.pinchGesture,
+                //     Emojis.prayGesture,
+                //     Emojis.thinkingGesture,
+                //     Emojis.gunGesture,
+                //     Emojis.fistGesture,
+                //     Emojis.callMeGesture,
+                //     Emojis.backhandRightGesture,
+                //     Emojis.backhandLeftGesture
+                // ]);
+
                 const GE = new fp.GestureEstimator([
-                    fp.Gestures.VictoryGesture,
                     fp.Gestures.ThumbsUpGesture,
-                    Emojis.loveGesture,
-                    Emojis.vulcanGesture,
-                    Emojis.fingerCrossedGesture,
-                    Emojis.loveYouGesture,
-                    Emojis.hornsGesture,
-                    Emojis.okayGesture,
-                    Emojis.hushGesture,
-                    Emojis.pinchGesture,
-                    Emojis.prayGesture,
-                    Emojis.thinkingGesture,
-                    Emojis.gunGesture,
-                    Emojis.fistGesture,
-                    Emojis.callMeGesture,
-                    Emojis.backhandRightGesture,
-                    Emojis.backhandLeftGesture
+                    Handsigns.aSign, Handsigns.bSign, Handsigns.cSign, Handsigns.dSign, Handsigns.eSign, Handsigns.fSign, Handsigns.gSign,
+                    Handsigns.hSign, Handsigns.iSign, Handsigns.jSign, Handsigns.kSign, Handsigns.lSign, Handsigns.mSign, Handsigns.nSign,
+                    Handsigns.oSign, Handsigns.pSign, Handsigns.qSign, Handsigns.rSign, Handsigns.sSign, Handsigns.tSign, Handsigns.uSign,
+                    Handsigns.vSign, Handsigns.wSign, Handsigns.xSign, Handsigns.ySign, Handsigns.zSign
                 ]);
 
                 const estimatedGestures = await GE.estimate(hand[0].landmarks, 6.5);
                 console.log(estimatedGestures); 
-                // document.querySelector('.pose-data') .innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
+                document.querySelector('.pose-data') .innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
 
-                if (dataState === "on") {}
+                // if (dataState === "on") {}
 
                 if (gamestate === 'started') {
                     document
@@ -180,7 +174,8 @@ export default function Handsign() {
 
                     //setting up game state, looking for love emoji
                     if (estimatedGestures.gestures[maxConfidence].name === 'thumbs_up' && gamestate !== 'played') {
-                        _emojiList();
+                        // _emojiList();
+                        _signList();
                         gamestate = 'played';
                         // console.log('game_state', gamestate); console.log('currentEmoji',
                         // currentEmoji, 'emojilist.length', emojiList.length); runCountdown();
@@ -190,35 +185,53 @@ export default function Handsign() {
                             .add('play');
                             document
                             .querySelector('.tutor-text')
-                            .innerText = "make a hand gesture based on emoji shown below";
+                            .innerText = "make a hand gesture based on letter shown below";
                     } else if (gamestate === 'played') {
                         document
                             .querySelector('#app-title')
                             .innerText = "";
                         //berhasil selesai semua
-                        if (currentEmoji === emojiList.length) {
+                        if (currentSign === signList.length) {
                             //animasi berhasil ganti tulisan emoji
-                            _emojiList();
-                            currentEmoji = 0;
-                            points = 0;
+                            // _emojiList();
+                            _signList();
+                            currentSign = 0;
+                            // currentEmoji = 0;
+                            // points = 0;
                             return;
                         }
 
                         //game play state
                         document
                             .getElementById('emojimage')
-                            .setAttribute('src', emojiList[currentEmoji].src);
+                            .setAttribute('src', signList[currentSign].src);
 
-                        console.log('points', points);
+                        // console.log('points', points);
                         // const match = estimatedGestures.find(g => emojiList[currentEmoji].alt ===
                         // g.gestures.name);
-                        if (emojiList[currentEmoji].alt === estimatedGestures.gestures[maxConfidence].name) {
+                        // if (emojiList[currentEmoji].alt === estimatedGestures.gestures[maxConfidence].name) {
+                        //     // ganti emoji document
+                        //     // .querySelector(`[alt=${estimatedGestures.gestures[maxConfidence].name}]`)
+                        //     // .classList     .add('found');
+                        //     currentEmoji++;
+                        //     currentSign++;
+                        //     //nambah point
+                        //     // points += 10;
+                        //     // emojiEffect();
+                            
+                        //     // document
+                        //     //     .getElementById('points')
+                        //     //     .innerHTML = points;
+                        //     //animasi nambah point (framer asoys) bunyi cengkring nambah point
+                        // }
+                        if (signList[currentSign].alt === estimatedGestures.gestures[maxConfidence].name) {
                             // ganti emoji document
                             // .querySelector(`[alt=${estimatedGestures.gestures[maxConfidence].name}]`)
                             // .classList     .add('found');
                             currentEmoji++;
+                            currentSign++;
                             //nambah point
-                            points += 10;
+                            // points += 10;
                             // emojiEffect();
                             
                             // document
@@ -226,7 +239,8 @@ export default function Handsign() {
                             //     .innerHTML = points;
                             //animasi nambah point (framer asoys) bunyi cengkring nambah point
                         }
-                        setEmoji(estimatedGestures.gestures[maxConfidence].name);
+                        // setEmoji(estimatedGestures.gestures[maxConfidence].name);
+                        setSign(estimatedGestures.gestures[maxConfidence].name);
                         
                         // console.log(emoji);
                     } else if (gamestate === 'finished') {
@@ -238,8 +252,8 @@ export default function Handsign() {
             }
             // emojiEffect();
             // Draw mesh 
-            // const ctx = canvasRef.current.getContext("2d");
-            // drawHand(hand, ctx);
+            const ctx = canvasRef.current.getContext("2d");
+            drawHand(hand, ctx);
         }
     };
 
@@ -255,20 +269,13 @@ export default function Handsign() {
         }
     }
 
-    function showData() {
-        if (dataState === "on") {
-            setDataState('off');
-        } else {
-            setDataState('on');
-        }
-    }
 
 
     return (
         <ChakraProvider>
             <Helmet>
           <meta charSet="utf-8" />
-          <title>Handmoji | Play</title>
+          <title>Handsign | Learn ASL using AI camera</title>
           {/* <link rel="canonical" href="http://mysite.com/example" /> */}
         </Helmet>
             <Container maxW="xl" centerContent>
@@ -293,7 +300,7 @@ export default function Handsign() {
                         
                     {/* </div> */}
 
-                    {emoji !== null || 'undefined'
+                    {sign !== null || 'undefined'
                         ? (<div style={{
                             position: "absolute",
                             marginLeft: "auto",
@@ -303,7 +310,7 @@ export default function Handsign() {
                             textAlign: "-webkit-center",}}>
                             <Text color="white" fontSize="sm" mb={1}>detected gestures</Text>
                         <img
-                            src={Emojimage[emoji]}
+                            src={Signimage[sign]}
                             style={{
                             height: 50
                         }}/>
@@ -323,17 +330,17 @@ export default function Handsign() {
                     right: '30px'
                 }}></div>
 
-                <Image boxSize="80px" objectFit="cover" id='emojimage'/> 
-{/* <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre> */}
+                <Image h="80px" objectFit="cover" id='emojimage'/> 
+<pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre>
 
             </Container>
 
-            {/* <Stack id="start-button" spacing={4} direction="row" align="center"> */}
+            <Stack id="start-button" spacing={4} direction="row" align="center">
                 {/* <Button colorScheme="blue" onClick={restartGame}>data</Button> */}
                 {/* <Button colorScheme="blue" onClick={restartGame}>START</Button> */}
-                {/* <Button onClick={turnOffCamera} colorScheme="blue">matiin kamera</Button> */}
+                <Button onClick={turnOffCamera} colorScheme="blue">matiin kamera</Button>
                 {/* <IconButton aria-label="Search database" icon={<SearchIcon />} /> */}
-            {/* </Stack> */}
+            </Stack>
             
 
         </ChakraProvider>
