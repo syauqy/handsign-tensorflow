@@ -1,0 +1,7 @@
+spec:
+ name: handsign
+ static_sites:
+ - git:
+     branch: master
+     repo_clone_url: https://github.com/syauqy/handsign-tensorflow-gatsby.git
+   name: handsign
