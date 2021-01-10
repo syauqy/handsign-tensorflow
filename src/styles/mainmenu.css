@@ -20,13 +20,6 @@ position: fixed;
     
 }
 
-.lovemoji{
-    background-image: url('../emojimage/heart_emoji.png');
-    background-repeat: no-repeat;
-    width: 130px;
-  height: 130px;
-  border-radius: 50px;
-}
   
   .boops {
       display: block;
