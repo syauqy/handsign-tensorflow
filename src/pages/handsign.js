@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as handpose from '@tensorflow-models/handpose';
 import Webcam from 'react-webcam';
@@ -121,7 +121,7 @@ export default function Handsign() {
 
                 const estimatedGestures = await GE.estimate(hand[0].landmarks, 6.5);
                 // console.log(estimatedGestures); 
-                document.querySelector('.pose-data') .innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
+                // document.querySelector('.pose-data') .innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
 
 
                 if (gamestate === 'started') {
@@ -184,7 +184,7 @@ export default function Handsign() {
     };
 
     useEffect(() => {
-        runHandpose()
+        runHandpose();
     }, []);
 
     function turnOffCamera() {
@@ -255,7 +255,7 @@ export default function Handsign() {
                 }}></div>
 
                 <Image h="150px" objectFit="cover" id='emojimage'/> 
-<pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre>
+{/* <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre> */}
 
             </Container>
 

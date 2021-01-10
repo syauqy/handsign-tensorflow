@@ -1,6 +1,6 @@
 import React from "react"
 // import { Link } from "gatsby"
-import MainMenu from './app'
+// import MainMenu from './app'
 import { Helmet } from "react-helmet"
 
 // import Layout from "../components/layout"

@@ -1,27 +1,16 @@
-import React, {useRef, useState, useCallback, useEffect} from 'react';
+import React, {useRef} from 'react';
 import {
     Container,
     VStack,
-    Center,
     Box,
     Text,
     Button,
     Heading,
-
-    //modal
-    useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton
 } from '@chakra-ui/react'
 import {Link} from 'gatsby'
-import {motion} from 'framer-motion'
+// import {motion} from 'framer-motion'
 import '../styles/mainmenu.css'
-import {Engine, Render, Runner, World, Bodies} from 'matter-js'
+// import {Engine, Render, Runner, World, Bodies} from 'matter-js'
 
 export default function MainMenu() {
     // const webcamRef = useRef(null);
@@ -37,34 +26,34 @@ export default function MainMenu() {
     //     }, 888);
     // }
 
-    const emojis = [
-        'https://ik.imagekit.io/ps3xes4nrg/fingcrossed_emoji_avhUZ4KvEg0c.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/heart_emoji_8n0j1a9KqwN.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/horns_emoji_FpTUEO8IL.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/loveyou_emoji_0Y73SHTRFTaJ.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/ok_emoji_hLw6a6BB-.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/thumbs_up_emoji_K0eZbiEtKb0.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/victory_emoji_EXqiolk0d8c.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/vulcan_emoji_GkdMsyHqdC.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/thinking_emoji_FUH1tBqEbBw.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/hush_emoji_V4Xkp1Zwr.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/fist_emoji_kvPDQvO2gr.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/pinch_emoji_xDRVg9Hz3JEn.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/gun_emoji_T-2sCCXbXe.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/pray_emoji_LLdMjWIegtu.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/backhand_right_emoji_0mGFeXPCH.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/call_me_emoji_OvAYOorfRdL.svg',
-        'https://ik.imagekit.io/ps3xes4nrg/backhand_left_emoji_7bmFlF1CDLW.svg'
-    ];
+    // const emojis = [
+    //     'https://ik.imagekit.io/ps3xes4nrg/fingcrossed_emoji_avhUZ4KvEg0c.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/heart_emoji_8n0j1a9KqwN.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/horns_emoji_FpTUEO8IL.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/loveyou_emoji_0Y73SHTRFTaJ.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/ok_emoji_hLw6a6BB-.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/thumbs_up_emoji_K0eZbiEtKb0.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/victory_emoji_EXqiolk0d8c.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/vulcan_emoji_GkdMsyHqdC.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/thinking_emoji_FUH1tBqEbBw.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/hush_emoji_V4Xkp1Zwr.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/fist_emoji_kvPDQvO2gr.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/pinch_emoji_xDRVg9Hz3JEn.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/gun_emoji_T-2sCCXbXe.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/pray_emoji_LLdMjWIegtu.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/backhand_right_emoji_0mGFeXPCH.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/call_me_emoji_OvAYOorfRdL.svg',
+    //     'https://ik.imagekit.io/ps3xes4nrg/backhand_left_emoji_7bmFlF1CDLW.svg'
+    // ];
 
     // const deviceWidth = document.body.clientWidth; const deviceHeight =
     // document.body.clientHeight;
 
-    let _titlemoji;
+    // let _titlemoji;
 
-    let deviceWidth;
-    let deviceHeight;
-    let world;
+    // let deviceWidth;
+    // let deviceHeight;
+    // let world;
 
     // function createBall() {
     //     const xDrop = Math.round(Math.random() * deviceWidth);
@@ -124,22 +113,22 @@ export default function MainMenu() {
     //     World.add(engine.world, [ball2]);
     // }
 
-    function emojiAnimation() {
-        if (typeof window !== 'undefined' && typeof boopRef.current !== "undefined") {
-            world = boopRef.current;
+    // function emojiAnimation() {
+    //     if (typeof window !== 'undefined' && typeof boopRef.current !== "undefined") {
+    //         world = boopRef.current;
 
-            deviceWidth = window.innerWidth;
-            deviceHeight = window.innerHeight;
+    //         deviceWidth = window.innerWidth;
+    //         deviceHeight = window.innerHeight;
 
-            boopRef.current.width = deviceWidth;
-            boopRef.current.height = deviceHeight;
+    //         boopRef.current.width = deviceWidth;
+    //         boopRef.current.height = deviceHeight;
 
-            console.log('device width:', deviceWidth, 'device height:', deviceHeight);
+    //         console.log('device width:', deviceWidth, 'device height:', deviceHeight);
 
-            // boopClicked();
-        }
+    //         // boopClicked();
+    //     }
 
-    }
+    // }
 
     // useEffect(() => {
     //     runAnimation()
