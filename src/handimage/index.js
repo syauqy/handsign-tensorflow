@@ -24,6 +24,34 @@ import W_sign from './W.svg';
 import X_sign from './X.svg';
 import Y_sign from './Y.svg';
 import Z_sign from './Z.svg';
+
+import A_hand from './Ahand.svg';
+import B_hand from './Bhand.svg';
+import C_hand from './Chand.svg';
+import D_hand from './Dhand.svg';
+import E_hand from './Ehand.svg';
+import F_hand from './Fhand.svg';
+import G_hand from './Ghand.svg';
+import H_hand from './Hhand.svg';
+import I_hand from './Ihand.svg';
+import J_hand from './Jhand.svg';
+import K_hand from './Khand.svg';
+import L_hand from './Lhand.svg';
+import M_hand from './Mhand.svg';
+import N_hand from './Nhand.svg';
+import O_hand from './Ohand.svg';
+import P_hand from './Phand.svg';
+import Q_hand from './Qhand.svg';
+import R_hand from './Rhand.svg';
+import S_hand from './Shand.svg';
+import T_hand from './Thand.svg';
+import U_hand from './Uhand.svg';
+import V_hand from './Vhand.svg';
+import W_hand from './Whand.svg';
+import X_hand from './Xhand.svg';
+import Y_hand from './Yhand.svg';
+import Z_hand from './Zhand.svg';
+
  
 
 export const Signimage =  {
@@ -57,107 +85,107 @@ export const Signimage =  {
 
 export const Signpass =  [
     {
-        src: A_sign,
+        src: A_hand,
         alt: 'A'
     },
     {
-        src: B_sign,
+        src: B_hand,
         alt: 'B'
     },
     {
-        src: C_sign,
+        src: C_hand,
         alt: 'C'
     },
     {
-        src: D_sign,
+        src: D_hand,
         alt: 'D'
     },
     {
-        src: E_sign,
+        src: E_hand,
         alt: 'E'
     },
     {
-        src: F_sign,
+        src: F_hand,
         alt: 'F'
     },
     {
-        src: G_sign,
+        src: G_hand,
         alt: 'G'
     },
     {
-        src: H_sign,
+        src: H_hand,
         alt: 'H'
     },
     {
-        src: I_sign,
+        src: I_hand,
         alt: 'I'
     },
     {
-        src: J_sign,
+        src: J_hand,
         alt: 'J'
     },
     {
-        src: K_sign,
+        src: K_hand,
         alt: 'K'
     },
     {
-        src: L_sign,
+        src: L_hand,
         alt: 'L'
     },
     {
-        src: M_sign,
+        src: M_hand,
         alt: 'M'
     },
     {
-        src: N_sign,
+        src: N_hand,
         alt: 'N'
     },
     {
-        src: O_sign,
+        src: O_hand,
         alt: 'O'
     },
     {
-        src: P_sign,
+        src: P_hand,
         alt: 'P'
     },
     {
-        src: Q_sign,
+        src: Q_hand,
         alt: 'Q'
     },
     {
-        src: R_sign,
+        src: R_hand,
         alt: 'R'
     },
     {
-        src: S_sign,
+        src: S_hand,
         alt: 'S'
     },
     {
-        src: T_sign,
+        src: T_hand,
         alt: 'T'
     },
     {
-        src: U_sign,
+        src: U_hand,
         alt: 'U'
     },
     {
-        src: V_sign,
+        src: V_hand,
         alt: 'V'
     },
     {
-        src: W_sign,
+        src: W_hand,
         alt: 'W'
     },
     {
-        src: X_sign,
+        src: X_hand,
         alt: 'X'
     },
     {
-        src: Y_sign,
+        src: Y_hand,
         alt: 'Y'
     },
     {
-        src: Z_sign,
+        src: Z_hand,
         alt: 'Z'
     },
 ]

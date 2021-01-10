@@ -6,9 +6,10 @@ import {drawHand} from '../components/handposeutil';
 import * as fp from 'fingerpose';
 import { Helmet } from "react-helmet"
 
-import Emojis from '../gestures';
+// import Emojis from '../gestures';
 
 import Handsigns from '../handsigns';
+import handImages from '../images/handImages.svg';
 
 import {
     Text,
@@ -19,11 +20,19 @@ import {
     Container,
     Box,
     VStack,
-
+    Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+useDisclosure,
+Link,
     ChakraProvider
 } from '@chakra-ui/react'
 
-import {Emojimage, Emojipass} from '../emojimage';
+// import {Emojimage, Emojipass} from '../emojimage';
 import {Signimage, Signpass} from '../handimage';
 
 import '../styles/App.css'
@@ -31,33 +40,27 @@ import '../styles/App.css'
 import '@tensorflow/tfjs-backend-webgl';
 
 export default function Handsign() {
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
     const [camState,
         setCamState] = useState("on");
-    // const [dataState,
-    //     setDataState] = useState('off');
 
     const [sign, setSign] = useState(null);
 
-    const [emoji,
-        setEmoji] = useState(null);
 
     let signList;
     let currentSign = 0;
 
-    let emojiList;
-    let currentEmoji = 0;
-    let points = 0;
+
     let gamestate = 'started';
 
     async function runHandpose() {
-        // setCamState('on');
         const net = await handpose.load();
         console.log("Handpose model loaded.");
-        // _emojiList();
         _signList();
-        // onOpen();  Loop and detect hands
+
         setInterval(() => {
             detect(net);
         }, 100);
@@ -68,9 +71,6 @@ export default function Handsign() {
         signList = generateSigns();
     }
 
-    function _emojiList() {
-        emojiList = generateEmojis();
-    }
 
     function shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
@@ -85,22 +85,6 @@ export default function Handsign() {
         return password;
     }
 
-    function generateEmojis() {
-        const password = shuffle(Emojipass);
-        // const passwordContainer = document.getElementById('emojis');
-
-        // passwordContainer.innerHTML = '';
-
-        // password.forEach(obj => {
-        //     const img = document.createElement('img');
-        //     img.src = obj.src;
-        //     img.alt = obj.alt;
-
-        //     passwordContainer.appendChild(img);
-        // });
-
-        return password;
-    }
 
 
     async function detect(net) {
@@ -126,25 +110,6 @@ export default function Handsign() {
 
             if (hand.length > 0) {
                 // add "✌🏻" and "👍" as sample gestures
-                // const GE = new fp.GestureEstimator([
-                //     fp.Gestures.VictoryGesture,
-                //     fp.Gestures.ThumbsUpGesture,
-                //     Emojis.loveGesture,
-                //     Emojis.vulcanGesture,
-                //     Emojis.fingerCrossedGesture,
-                //     Emojis.loveYouGesture,
-                //     Emojis.hornsGesture,
-                //     Emojis.okayGesture,
-                //     Emojis.hushGesture,
-                //     Emojis.pinchGesture,
-                //     Emojis.prayGesture,
-                //     Emojis.thinkingGesture,
-                //     Emojis.gunGesture,
-                //     Emojis.fistGesture,
-                //     Emojis.callMeGesture,
-                //     Emojis.backhandRightGesture,
-                //     Emojis.backhandLeftGesture
-                // ]);
 
                 const GE = new fp.GestureEstimator([
                     fp.Gestures.ThumbsUpGesture,
@@ -158,7 +123,6 @@ export default function Handsign() {
                 console.log(estimatedGestures); 
                 document.querySelector('.pose-data') .innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
 
-                // if (dataState === "on") {}
 
                 if (gamestate === 'started') {
                     document
@@ -174,11 +138,8 @@ export default function Handsign() {
 
                     //setting up game state, looking for love emoji
                     if (estimatedGestures.gestures[maxConfidence].name === 'thumbs_up' && gamestate !== 'played') {
-                        // _emojiList();
                         _signList();
                         gamestate = 'played';
-                        // console.log('game_state', gamestate); console.log('currentEmoji',
-                        // currentEmoji, 'emojilist.length', emojiList.length); runCountdown();
                         document
                             .getElementById('emojimage')
                             .classList
@@ -193,11 +154,8 @@ export default function Handsign() {
                         //berhasil selesai semua
                         if (currentSign === signList.length) {
                             //animasi berhasil ganti tulisan emoji
-                            // _emojiList();
                             _signList();
                             currentSign = 0;
-                            // currentEmoji = 0;
-                            // points = 0;
                             return;
                         }
 
@@ -205,30 +163,11 @@ export default function Handsign() {
                         document
                             .getElementById('emojimage')
                             .setAttribute('src', signList[currentSign].src);
-
-                        // console.log('points', points);
-                        // const match = estimatedGestures.find(g => emojiList[currentEmoji].alt ===
-                        // g.gestures.name);
-                        // if (emojiList[currentEmoji].alt === estimatedGestures.gestures[maxConfidence].name) {
-                        //     // ganti emoji document
-                        //     // .querySelector(`[alt=${estimatedGestures.gestures[maxConfidence].name}]`)
-                        //     // .classList     .add('found');
-                        //     currentEmoji++;
-                        //     currentSign++;
-                        //     //nambah point
-                        //     // points += 10;
-                        //     // emojiEffect();
-                            
-                        //     // document
-                        //     //     .getElementById('points')
-                        //     //     .innerHTML = points;
-                        //     //animasi nambah point (framer asoys) bunyi cengkring nambah point
-                        // }
                         if (signList[currentSign].alt === estimatedGestures.gestures[maxConfidence].name) {
                             // ganti emoji document
                             // .querySelector(`[alt=${estimatedGestures.gestures[maxConfidence].name}]`)
                             // .classList     .add('found');
-                            currentEmoji++;
+                            // currentEmoji++;
                             currentSign++;
                             //nambah point
                             // points += 10;
@@ -250,7 +189,6 @@ export default function Handsign() {
                 }
 
             }
-            // emojiEffect();
             // Draw mesh 
             const ctx = canvasRef.current.getContext("2d");
             drawHand(hand, ctx);
@@ -276,7 +214,6 @@ export default function Handsign() {
             <Helmet>
           <meta charSet="utf-8" />
           <title>Handsign | Learn ASL using AI camera</title>
-          {/* <link rel="canonical" href="http://mysite.com/example" /> */}
         </Helmet>
             <Container maxW="xl" centerContent>
                 <VStack spacing={4} align="center">
@@ -288,8 +225,7 @@ export default function Handsign() {
                 <Heading as="h1" size="lg" id="app-title" color="white" textAlign="center">🧙‍♀️ Loading the Magic 🧙‍♂️</Heading>
                 
 
-                {/* <div className="responsive-embed">
-            </div> */}
+
 
                 <div id="webcam-container">
                     {camState === 'on'
@@ -306,7 +242,7 @@ export default function Handsign() {
                             marginLeft: "auto",
                             marginRight: "auto",
                             right: "calc(50% - 50px)",
-                            bottom: 20,
+                            bottom: 80,
                             textAlign: "-webkit-center",}}>
                             <Text color="white" fontSize="sm" mb={1}>detected gestures</Text>
                         <img
@@ -330,7 +266,7 @@ export default function Handsign() {
                     right: '30px'
                 }}></div>
 
-                <Image h="80px" objectFit="cover" id='emojimage'/> 
+                <Image h="150px" objectFit="cover" id='emojimage'/> 
 <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre>
 
             </Container>
@@ -338,9 +274,28 @@ export default function Handsign() {
             <Stack id="start-button" spacing={4} direction="row" align="center">
                 {/* <Button colorScheme="blue" onClick={restartGame}>data</Button> */}
                 {/* <Button colorScheme="blue" onClick={restartGame}>START</Button> */}
-                <Button onClick={turnOffCamera} colorScheme="blue">matiin kamera</Button>
+                <Button onClick={turnOffCamera} colorScheme="orange">Camera</Button>
+                <Button onClick={onOpen} colorScheme="orange">Learn More</Button>
                 {/* <IconButton aria-label="Search database" icon={<SearchIcon />} /> */}
             </Stack>
+
+            <Modal onClose={onClose} isOpen={isOpen} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>American Sign Language (ASL)</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+              <Text fontSize="sm">American Sign Language (ASL) is a visual language that serves as the predominant sign language of Deaf communities in the United States and most of Canada.<br></br>
+          Here's the list of ASL hand gestures for alphabet.</Text>
+          <Image src={handImages}/>
+          <Text fontSize="sm">This sign language illustration is created by <Link href="https://thenounproject.com/pelodrome/" isExternal color="orange.300">Pelin Kahraman</Link></Text>
+            
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
             
 
         </ChakraProvider>
