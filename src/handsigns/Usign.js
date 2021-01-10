@@ -31,7 +31,7 @@ export const uSign = new GestureDescription('U');
 
 //Thumb
 uSign.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
-uSign.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
+uSign.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.70);
 
 //Index
 uSign.addCurl(Finger.Index, FingerCurl.NoCurl, 1);
@@ -47,5 +47,5 @@ uSign.addDirection(Finger.Ring, FingerDirection.VerticalUp, 0.70);
 
 //Pinky
 uSign.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1);
-uSign.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 0.70);
+uSign.addDirection(Finger.Pinky, FingerDirection.DiagonalUpLeft, 0.70);
 

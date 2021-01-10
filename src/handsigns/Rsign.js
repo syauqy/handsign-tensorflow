@@ -35,7 +35,7 @@ rSign.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.70);
 
 //Index
 rSign.addCurl(Finger.Index, FingerCurl.NoCurl, 1);
-rSign.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.70);
+rSign.addDirection(Finger.Index, FingerDirection.VerticalUp, 0.70);
 
 //Middle
 rSign.addCurl(Finger.Middle, FingerCurl.NoCurl, 1);

@@ -58,7 +58,7 @@ export default function Handsign() {
 
     async function runHandpose() {
         const net = await handpose.load();
-        console.log("Handpose model loaded.");
+        // console.log("Handpose model loaded.");
         _signList();
 
         setInterval(() => {
@@ -120,7 +120,7 @@ export default function Handsign() {
                 ]);
 
                 const estimatedGestures = await GE.estimate(hand[0].landmarks, 6.5);
-                console.log(estimatedGestures); 
+                // console.log(estimatedGestures); 
                 document.querySelector('.pose-data') .innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
 
 
@@ -164,19 +164,7 @@ export default function Handsign() {
                             .getElementById('emojimage')
                             .setAttribute('src', signList[currentSign].src);
                         if (signList[currentSign].alt === estimatedGestures.gestures[maxConfidence].name) {
-                            // ganti emoji document
-                            // .querySelector(`[alt=${estimatedGestures.gestures[maxConfidence].name}]`)
-                            // .classList     .add('found');
-                            // currentEmoji++;
                             currentSign++;
-                            //nambah point
-                            // points += 10;
-                            // emojiEffect();
-                            
-                            // document
-                            //     .getElementById('points')
-                            //     .innerHTML = points;
-                            //animasi nambah point (framer asoys) bunyi cengkring nambah point
                         }
                         // setEmoji(estimatedGestures.gestures[maxConfidence].name);
                         setSign(estimatedGestures.gestures[maxConfidence].name);
