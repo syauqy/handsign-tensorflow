@@ -6,7 +6,6 @@ import {drawHand} from '../components/handposeutil';
 import * as fp from 'fingerpose';
 import { Helmet } from "react-helmet"
 
-// import Emojis from '../gestures';
 
 import Handsigns from '../handsigns';
 import handImages from '../images/handImages.svg';
@@ -32,7 +31,6 @@ Link,
     ChakraProvider
 } from '@chakra-ui/react'
 
-// import {Emojimage, Emojipass} from '../emojimage';
 import {Signimage, Signpass} from '../handimage';
 
 import '../styles/App.css'
@@ -58,7 +56,6 @@ export default function Handsign() {
 
     async function runHandpose() {
         const net = await handpose.load();
-        // console.log("Handpose model loaded.");
         _signList();
 
         setInterval(() => {
@@ -106,10 +103,8 @@ export default function Handsign() {
 
             // Make Detections
             const hand = await net.estimateHands(video);
-            // console.log('aman', signList);
 
             if (hand.length > 0) {
-                // add "✌🏻" and "👍" as sample gestures
 
                 const GE = new fp.GestureEstimator([
                     fp.Gestures.ThumbsUpGesture,
@@ -136,7 +131,7 @@ export default function Handsign() {
                         .map((p) => p.confidence);
                     const maxConfidence = confidence.indexOf(Math.max.apply(undefined, confidence));
 
-                    //setting up game state, looking for love emoji
+                    //setting up game state, looking for thumb emoji
                     if (estimatedGestures.gestures[maxConfidence].name === 'thumbs_up' && gamestate !== 'played') {
                         _signList();
                         gamestate = 'played';
@@ -153,7 +148,6 @@ export default function Handsign() {
                             .innerText = "";
                         //berhasil selesai semua
                         if (currentSign === signList.length) {
-                            //animasi berhasil ganti tulisan emoji
                             _signList();
                             currentSign = 0;
                             return;
@@ -166,10 +160,8 @@ export default function Handsign() {
                         if (signList[currentSign].alt === estimatedGestures.gestures[maxConfidence].name) {
                             currentSign++;
                         }
-                        // setEmoji(estimatedGestures.gestures[maxConfidence].name);
                         setSign(estimatedGestures.gestures[maxConfidence].name);
                         
-                        // console.log(emoji);
                     } else if (gamestate === 'finished') {
                         
                         return;
@@ -220,10 +212,6 @@ export default function Handsign() {
                         ? <Webcam id="webcam" ref={webcamRef}/>
                         : <div id="webcam" background="black"></div>}
 
-                    {/* <div id="emojis"> */}
-                        
-                    {/* </div> */}
-
                     {sign !== null || 'undefined'
                         ? (<div style={{
                             position: "absolute",
@@ -260,11 +248,8 @@ export default function Handsign() {
             </Container>
 
             <Stack id="start-button" spacing={4} direction="row" align="center">
-                {/* <Button colorScheme="blue" onClick={restartGame}>data</Button> */}
-                {/* <Button colorScheme="blue" onClick={restartGame}>START</Button> */}
                 <Button onClick={turnOffCamera} colorScheme="orange">Camera</Button>
                 <Button onClick={onOpen} colorScheme="orange">Learn More</Button>
-                {/* <IconButton aria-label="Search database" icon={<SearchIcon />} /> */}
             </Stack>
 
             <Modal onClose={onClose} isOpen={isOpen} isCentered>
