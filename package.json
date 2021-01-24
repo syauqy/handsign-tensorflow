@@ -9,7 +9,6 @@
     "@chakra-ui/react": "^1.0.4",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
-    "@tensorflow-models/coco-ssd": "^2.2.1",
     "@tensorflow-models/handpose": "^0.0.6",
     "@tensorflow/tfjs": "^2.4.0",
     "@tensorflow/tfjs-backend-webgl": "^2.4.0",
@@ -23,15 +22,11 @@
     "gatsby-plugin-sharp": "^2.8.0",
     "gatsby-source-filesystem": "^2.5.0",
     "gatsby-transformer-sharp": "^2.6.0",
-    "matter-js": "^0.15.0",
-    "poly-decomp": "^0.3.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
-    "react-countdown": "^2.3.1",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.1.0",
-    "react-script-tag": "^1.1.2",
     "react-webcam": "^5.2.2"
   },
   "devDependencies": {
@@ -52,9 +47,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/syauqy/handsign-tensorflow-gatsby"
   }
 }

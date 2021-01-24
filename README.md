@@ -16,6 +16,58 @@ Handsign is a simple AI-based hand gesture recognition that translates a hand po
 
 ## [See Demo](https://handsign-m4qq6.ondigitalocean.app/)
 
+# Installation
+1. **Clone the repository**
+
+  ```shell
+  # copy the repo to your machine
+
+  git clone https://github.com/syauqy/handsign-tensorflow-gatsby.git
+  ```
+
+2. **Start the project**
+
+  ```shell
+  # move to the project folder and install all dependencies
+  
+  cd handsign-tensorflow-gatsby
+  yarn install
+  ```
+
+3. **Run the project on your local machine**
+
+  ```shell
+  # run Gatsby
+
+  yarn develop
+  ```
+
+4. **The project is live 🚀**
+  
+  Your project is live and running at `http://localhost:8000`
+
+  You can edit the core program at `src/pages/app.js`
+
+# What's inside the project
+## Extract the fingerpose data
+
+uncomment the `<pre>` component
+
+  ```js
+  <Image h="150px" objectFit="cover" id='emojimage'/> 
+
+  // uncomment this
+  {/* <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre> */}
+
+  </Container>
+  ```
+uncomment the `estimatedGestures` data to change `'.pose-data'` innerHTML
+
+  ```js
+  // document.querySelector('.pose-data').innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
+  ```
+the `estimatedGestures` data will render on your screen.
+
 # References & Libraries
 * [Tensorflow JS](https://www.tensorflow.org/js) - A Library for ML in JS.
 
