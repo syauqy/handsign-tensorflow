@@ -4,11 +4,7 @@ import * as handpose from '@tensorflow-models/handpose';
 import Webcam from 'react-webcam';
 import {drawHand} from '../components/handposeutil';
 import * as fp from 'fingerpose';
-import { Helmet } from "react-helmet"
-
-
 import Handsigns from '../handsigns';
-import handImages from '../images/handImages.svg';
 
 import {
     Text,
@@ -19,31 +15,26 @@ import {
     Container,
     Box,
     VStack,
-    Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-useDisclosure,
-Link,
     ChakraProvider
 } from '@chakra-ui/react'
 
 import {Signimage, Signpass} from '../handimage';
 
 import About from '../components/about'
+import Metatags from '../components/metatags'
 
 import '../styles/App.css'
 
 import '@tensorflow/tfjs-backend-webgl';
+
+import {RiCameraFill, RiCameraOffFill} from "react-icons/ri";
 
 export default function App() {
 
     
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
+
     const [camState,
         setCamState] = useState("on");
 
@@ -53,12 +44,15 @@ export default function App() {
     let signList = [];
     let currentSign = 0;
 
-
     let gamestate = 'started';
+
+    // let net;
 
     async function runHandpose() {
         const net = await handpose.load();
         _signList();
+
+        // window.requestAnimationFrame(loop);
 
         setInterval(() => {
             detect(net);
@@ -105,7 +99,7 @@ export default function App() {
             const hand = await net.estimateHands(video);
 
             if (hand.length > 0) {
-
+                //loading the fingerpose model
                 const GE = new fp.GestureEstimator([
                     fp.Gestures.ThumbsUpGesture,
                     Handsigns.aSign, Handsigns.bSign, Handsigns.cSign, Handsigns.dSign, Handsigns.eSign, Handsigns.fSign, Handsigns.gSign,
@@ -123,8 +117,6 @@ export default function App() {
                         .querySelector('#app-title')
                         .innerText = "Make a 👍 gesture with your hand to start";
                 }
-
-                // console.log('sign',signList);
 
                 if (estimatedGestures.gestures !== undefined && estimatedGestures.gestures.length > 0) {
                     const confidence = estimatedGestures
@@ -147,7 +139,8 @@ export default function App() {
                         document
                             .querySelector('#app-title')
                             .innerText = "";
-                        //berhasil selesai semua
+
+                        //looping the sign list
                         if (currentSign === signList.length) {
                             _signList();
                             currentSign = 0;
@@ -164,13 +157,12 @@ export default function App() {
                         setSign(estimatedGestures.gestures[maxConfidence].name);
                         
                     } else if (gamestate === 'finished') {
-                        
                         return;
                     }
                 }
 
             }
-            // Draw mesh 
+            // Draw hand lines
             const ctx = canvasRef.current.getContext("2d");
             drawHand(hand, ctx);
         }
@@ -178,7 +170,7 @@ export default function App() {
 
     useEffect(() => {
         runHandpose();
-    }, []);
+    },[]);
 
     function turnOffCamera() {
         if (camState === "on") {
@@ -189,15 +181,11 @@ export default function App() {
     }
     
 
-
-
     return (
         <ChakraProvider>
-            <Helmet>
-          <meta charSet="utf-8" />
-          <title>Handsign | Learn ASL using AI camera</title>
-        </Helmet>
-            <Container maxW="xl" centerContent bgColor="#5784BA">
+            <Metatags />
+            <Box bgColor="#5784BA">
+            <Container centerContent maxW="xl" height="100vh" pt="0" pb="0">
                 <VStack spacing={4} align="center">
                     <Box h="20px"></Box>
                     <Heading as="h3" size="md" className="tutor-text" color="white" textAlign="center"></Heading>
@@ -206,7 +194,7 @@ export default function App() {
 
                 <Heading as="h1" size="lg" id="app-title" color="white" textAlign="center">🧙‍♀️ Loading the Magic 🧙‍♂️</Heading>
 
-                <div id="webcam-container">
+                <Box id="webcam-container">
                     {camState === 'on'
                         ? <Webcam id="webcam" ref={webcamRef}/>
                         : <div id="webcam" background="black"></div>}
@@ -228,18 +216,18 @@ export default function App() {
                         </div>
                         )
                         : (" ")}
-                </div>
+                </Box>
 
                 <canvas id="gesture-canvas" ref={canvasRef} style={{}}/>
 
-                <div
+                <Box
                     id="singmoji"
                     style={{
                     zIndex: 9,
                     position: 'fixed',
                     top: '50px',
                     right: '30px'
-                }}></div>
+                }}></Box>
 
                 <Image h="150px" objectFit="cover" id='emojimage'/> 
 {/* <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre> */}
@@ -247,11 +235,12 @@ export default function App() {
             </Container>
 
             <Stack id="start-button" spacing={4} direction="row" align="center">
-                <Button onClick={turnOffCamera} colorScheme="orange">Camera</Button>
+                <Button leftIcon={camState === 'on'
+                            ? <RiCameraFill size={20}/>
+                            : <RiCameraOffFill size={20}/>} onClick={turnOffCamera} colorScheme="orange">Camera</Button>
                 <About />
             </Stack>
-
-            
+            </Box>
         </ChakraProvider>
     )
 }
