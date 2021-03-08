@@ -33,13 +33,15 @@ Link,
 
 import {Signimage, Signpass} from '../handimage';
 
+import About from '../components/about'
+
 import '../styles/App.css'
 
 import '@tensorflow/tfjs-backend-webgl';
 
 export default function App() {
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    
     const webcamRef = useRef(null);
     const canvasRef = useRef(null);
     const [camState,
@@ -81,11 +83,9 @@ export default function App() {
         const password = shuffle(Signpass);
         return password;
     }
-
     
 
     async function detect(net) {
-        
         // Check data is available
         if (typeof webcamRef.current !== "undefined" && webcamRef.current !== null && webcamRef.current.video.readyState === 4) {
             // Get Video Properties
@@ -197,7 +197,7 @@ export default function App() {
           <meta charSet="utf-8" />
           <title>Handsign | Learn ASL using AI camera</title>
         </Helmet>
-            <Container maxW="xl" centerContent>
+            <Container maxW="xl" centerContent bgColor="#5784BA">
                 <VStack spacing={4} align="center">
                     <Box h="20px"></Box>
                     <Heading as="h3" size="md" className="tutor-text" color="white" textAlign="center"></Heading>
@@ -220,7 +220,7 @@ export default function App() {
                             bottom: 100,
                             textAlign: "-webkit-center",}}>
                             <Text color="white" fontSize="sm" mb={1}>detected gestures</Text>
-                        <img
+                        <img alt="signImage"
                             src={Signimage[sign]}
                             style={{
                             height: 30
@@ -248,28 +248,10 @@ export default function App() {
 
             <Stack id="start-button" spacing={4} direction="row" align="center">
                 <Button onClick={turnOffCamera} colorScheme="orange">Camera</Button>
-                <Button onClick={onOpen} colorScheme="orange">Learn More</Button>
+                <About />
             </Stack>
 
-            <Modal onClose={onClose} isOpen={isOpen} isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>American Sign Language (ASL)</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-              <Text fontSize="sm">American Sign Language (ASL) is a visual language that serves as the predominant sign language of Deaf communities in the United States and most of Canada.<br></br>
-          Here's the list of ASL hand gestures for alphabet.</Text>
-          <Image src={handImages}/>
-          <Text fontSize="sm">This sign language illustration is created by <Link href="https://thenounproject.com/pelodrome/" isExternal color="orange.300">Pelin Kahraman</Link></Text>
             
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-            
-
         </ChakraProvider>
     )
 }

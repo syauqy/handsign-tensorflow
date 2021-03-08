@@ -1,9 +1,9 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
-<!-- <p align="center">
-  <a href="https://www.jala.tech">
-    <img alt="Tambak Pintar Jala" src="https://jala.tech/wp-content/uploads/2020/11/Logo-Tambak-Pintar-07-e1604579893539.png" width="200" />
+<p align="center">
+  <a href="https://handsign-m4qq6.ondigitalocean.app/">
+    <img alt="Handsign logo" src="./src/images/loveyou_emoji.svg" width="80" />
   </a>
-</p> -->
+</p>
 <h1 align="center">
   Handsign - ASL Hand Gesture Detection Using TensorFlow
 </h1>
