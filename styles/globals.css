@@ -1,0 +1,139 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.pabrik-tablist {
+  overflow: scroll;
+}
+
+.pabrik-tablist::-webkit-scrollbar {
+  display: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.boops {
+  display: block;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  z-index: 9;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+#webcam {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  filter: FlipH;
+}
+
+#gesture-canvas {
+  position: fixed;
+  /* top:0;
+  left:0;
+  right: 0;
+  bottom: 0; */
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  filter: FlipH;
+  z-index: 9;
+}
+
+.pose-data {
+  font-size: 10px;
+}
+
+#webcam-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  /* background: royalblue; */
+}
+
+#app-title {
+  /* position: absolute; */
+  /* top:0;
+  left:0;
+  right: 0;
+  bottom: 0; */
+  z-index: 5;
+}
+
+.tutor-text {
+  z-index: 5;
+}
+
+#start-button {
+  width: 400px;
+  /* background-color: black;*/
+  /* color: white; */
+  /* font-size: 16px; */
+  border-radius: 30px;
+  border: none;
+  padding: 15px 20px;
+  text-align: center;
+  /* box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2); */
+  position: fixed;
+  bottom: 30px;
+  left: calc(50% - 150px);
+  z-index: 10;
+}
+
+#emojimage {
+  /* position: fixed; */
+  top: 60px;
+  left: calc(50% - 50px);
+  border-style: none;
+}
+
+#emojimage.play {
+  /* position: fixed; */
+  z-index: 10;
+}
+
+#emojis {
+  /* display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  height: 50px; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: -webkit-center;
+}
+
+#emojis img {
+  opacity: 0.5;
+  transition: opacity 200ms linear;
+}
+
+#emojis img.found {
+  opacity: 1;
+}

@@ -17,75 +17,75 @@ Handsign is a simple AI-based hand gesture recognition that translates a hand po
 ## [See Demo](https://handsign-m4qq6.ondigitalocean.app/)
 
 # Installation
+
 1. **Clone the repository**
 
-  ```shell
-  # copy the repo to your machine
+```shell
+# copy the repo to your machine
 
-  git clone https://github.com/syauqy/handsign-tensorflow-gatsby.git
-  ```
+git clone https://github.com/syauqy/handsign-tensorflow.git
+```
 
 2. **Start the project**
 
-  ```shell
-  # move to the project folder and install all dependencies
-  
-  cd handsign-tensorflow-gatsby
-  yarn install
-  ```
+```shell
+# move to the project folder and install all dependencies
+
+cd handsign-tensorflow
+yarn install
+```
 
 3. **Run the project on your local machine**
 
-  ```shell
-  # run Gatsby
+```shell
+# run Gatsby
 
-  yarn develop
-  ```
+yarn develop
+```
 
 4. **The project is live 🚀**
-  
-  Your project is live and running at `http://localhost:8000`
 
-  You can edit the core program at `src/pages/app.js`
+Your project is live and running at `http://localhost:3000`
+
+You can edit the core program at `src/pages/index.js`
 
 # What's inside the project
+
 ## Extract the fingerpose data
 
 uncomment the `<pre>` component
 
-  ```js
-  <Image h="150px" objectFit="cover" id='emojimage'/> 
+```js
+<Image h="150px" objectFit="cover" id='emojimage'/>
 
-  // uncomment this
-  {/* <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre> */}
+// uncomment this
+{/* <pre className="pose-data" color="white" style={{position: 'fixed', top: '150px', left: '10px'}} >Pose data</pre> */}
 
-  </Container>
-  ```
+</Container>
+```
+
 uncomment the `estimatedGestures` data to change `'.pose-data'` innerHTML
 
-  ```js
-  // document.querySelector('.pose-data').innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
-  ```
+```js
+// document.querySelector('.pose-data').innerHTML =JSON.stringify(estimatedGestures.poseData, null, 2);
+```
+
 the `estimatedGestures` data will render on your screen.
 
 # References & Libraries
-* [Tensorflow JS](https://www.tensorflow.org/js) - A Library for ML in JS.
 
-* [Handpose](https://github.com/tensorflow/tfjs-models/tree/master/handpose) - A lightweight ML pipeline consisting of two models: A palm detector and a hand-skeleton finger tracking model.
+- [Tensorflow JS](https://www.tensorflow.org/js) - A Library for ML in JS.
 
-* [Fingerpose](https://github.com/andypotato/fingerpose) - A pose classifier for hand landmarks detected by TensorFlow.js Handpose's model.
+- [Handpose](https://github.com/tensorflow/tfjs-models/tree/master/handpose) - A lightweight ML pipeline consisting of two models: A palm detector and a hand-skeleton finger tracking model.
 
-* Sign language illustration is created by [Pelin Kahraman](https://thenounproject.com/pelodrome/)
+- [Fingerpose](https://github.com/andypotato/fingerpose) - A pose classifier for hand landmarks detected by TensorFlow.js Handpose's model.
+
+- Sign language illustration is created by [Pelin Kahraman](https://thenounproject.com/pelodrome/)
 
 If you want to learn more about Tensorflow JS and custom gesture handpose, please kindly check these amazing videos
 
-* [Machine Learning with TensorFlow in JavaScript](https://www.youtube.com/watch?v=WIHZ7kjJ35o) - by [Jason Lengstorf](https://github.com/jlengstorf) and [Jason Mayes](https://github.com/jasonmayes)
+- [Machine Learning with TensorFlow in JavaScript](https://www.youtube.com/watch?v=WIHZ7kjJ35o) - by [Jason Lengstorf](https://github.com/jlengstorf) and [Jason Mayes](https://github.com/jasonmayes)
 
-* [Building a Real Time Sign Language Detection App with React.JS and Tensorflow.JS](https://www.youtube.com/watch?v=ZTSRZt04JkY) - by [Nicholas Renotte](https://github.com/nicknochnack)
-
-
-
-# Deploy to your site
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue-ghost.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/syauqy/handsign-tensorflow-gatsby/tree/master&refcode=a9cb43de523c)
+- [Building a Real Time Sign Language Detection App with React.JS and Tensorflow.JS](https://www.youtube.com/watch?v=ZTSRZt04JkY) - by [Nicholas Renotte](https://github.com/nicknochnack)
 
 <!-- AUTO-GENERATED-CONTENT:END -->
