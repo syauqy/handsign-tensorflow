@@ -25,7 +25,7 @@ import Metatags from "../components/metatags"
 
 // import "../styles/App.css"
 
-import "@tensorflow/tfjs-backend-webgl"
+// import "@tensorflow/tfjs-backend-webgl"
 
 import { RiCameraFill, RiCameraOffFill } from "react-icons/ri"
 

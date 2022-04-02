@@ -1,7 +1,7 @@
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
-  <a href="https://handsign-m4qq6.ondigitalocean.app/">
-    <img alt="Handsign logo" src="./src/images/loveyou_emoji.svg" width="80" />
+  <a href="https://handsign-tensorflow.vercel.app">
+    <img alt="Handsign logo" src="./public/loveyou_emoji.svg" width="80" />
   </a>
 </p>
 <h1 align="center">
@@ -14,7 +14,7 @@ Handsign is a simple AI-based hand gesture recognition that translates a hand po
 
 ![Handsign demo](https://media.giphy.com/media/3KCaNFPTP7ShM7V8jd/giphy.gif)
 
-## [See Demo](https://handsign-m4qq6.ondigitalocean.app/)
+## [See Demo](https://handsign-tensorflow.vercel.app)
 
 # Installation
 
@@ -38,16 +38,16 @@ yarn install
 3. **Run the project on your local machine**
 
 ```shell
-# run Gatsby
+# run Next
 
-yarn develop
+yarn dev
 ```
 
 4. **The project is live 🚀**
 
 Your project is live and running at `http://localhost:3000`
 
-You can edit the core program at `src/pages/index.js`
+You can edit the core program at `/pages/index.js`
 
 # What's inside the project
 
